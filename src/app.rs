@@ -1,5 +1,6 @@
 use crate::{error::Error, widgets::SelectableList};
 use nvd_cve::cve::Cve;
+use tui_input::Input;
 
 /// Type alias for the standard [`Result`] type.
 pub type AppResult<T> = std::result::Result<T, Error>;
@@ -9,8 +10,14 @@ pub type AppResult<T> = std::result::Result<T, Error>;
 pub struct App {
     /// Is the application running?
     pub running: bool,
-    /// List of CVE's.
-    pub cves: SelectableList<Cve>,
+    /// List of CVEs.
+    pub cves: Vec<Cve>,
+    /// List of CVE's for rendering.
+    pub list: SelectableList<Cve>,
+    /// Input.
+    pub input: Input,
+    /// Enable input.
+    pub input_mode: bool,
 }
 
 impl App {
@@ -18,7 +25,10 @@ impl App {
     pub fn new(cves: Vec<Cve>) -> Self {
         Self {
             running: true,
-            cves: SelectableList::with_items(cves),
+            cves: cves.clone(),
+            list: SelectableList::with_items(cves),
+            input: Input::default(),
+            input_mode: false,
         }
     }
 
