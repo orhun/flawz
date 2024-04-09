@@ -18,6 +18,8 @@ pub struct App {
     pub input: Input,
     /// Enable input.
     pub input_mode: bool,
+    /// Show details.
+    pub show_details: bool,
 }
 
 impl App {
@@ -29,6 +31,7 @@ impl App {
             list: SelectableList::with_items(cves),
             input: Input::default(),
             input_mode: false,
+            show_details: false,
         }
     }
 

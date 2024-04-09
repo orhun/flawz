@@ -7,6 +7,7 @@ use ratatui::{
     Frame,
 };
 use tui_input::Input;
+use tui_popup::Popup;
 
 /// Maximum number of elements to show in the table.
 const TABLE_PAGE_LIMIT: usize = 50;
@@ -87,6 +88,7 @@ pub fn render(app: &mut App, frame: &mut Frame) {
         &mut table_state,
     );
     render_cursor(app, area, frame);
+    render_details(app, area, frame);
 }
 
 /// Renders the cursor.
@@ -110,5 +112,69 @@ fn render_cursor(state: &mut App, area: Rect, frame: &mut Frame<'_>) {
             },
         );
         frame.set_cursor(x, y);
+    }
+}
+
+/// Render the details popup.
+fn render_details(app: &mut App, area: Rect, frame: &mut Frame<'_>) {
+    if let (true, Some(cve)) = (app.show_details, app.list.selected()) {
+        let description = cve.description.description_data[0].value.trim().to_string();
+        let mut lines = vec![
+            vec![
+                "ID".white().bold(),
+                ": ".fg(Color::Rgb(100, 100, 100)),
+                cve.cve_data_meta.id.to_string().into(),
+            ]
+            .into(),
+            vec![
+                "Assigner".white().bold(),
+                ": ".fg(Color::Rgb(100, 100, 100)),
+                cve.cve_data_meta.assigner.to_string().into(),
+            ]
+            .into(),
+        ];
+        let max_row_width = (area.width - 2) / 2;
+        if (Line::raw(&description).width() as u16) < max_row_width {
+            lines.push(
+                vec![
+                    "Description".white().bold(),
+                    ": ".fg(Color::Rgb(100, 100, 100)),
+                    description.into(),
+                ]
+                .into(),
+            );
+        } else {
+            lines.push(
+                vec![
+                    "Description".white().bold(),
+                    ": ".fg(Color::Rgb(100, 100, 100)),
+                ]
+                .into(),
+            );
+            lines.extend(
+                textwrap::wrap(&description, textwrap::Options::new(max_row_width as usize))
+                    .into_iter()
+                    .map(|v| v.to_string().into())
+                    .collect::<Vec<Line>>(),
+            );
+        }
+        for reference in &cve.references.reference_data {
+            let reference_line = vec![
+                "Reference".white().bold(),
+                ": ".fg(Color::Rgb(100, 100, 100)),
+                reference.url.to_string().into(),
+            ]
+            .into();
+            lines.push(reference_line);
+        }
+        let popup = Popup::new(
+            vec![
+                "|".fg(Color::Rgb(100, 100, 100)),
+                "Details".white().bold(),
+                "|".fg(Color::Rgb(100, 100, 100)),
+            ],
+            lines,
+        );
+        frame.render_widget(popup.to_widget(), area);
     }
 }

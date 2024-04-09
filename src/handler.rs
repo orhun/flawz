@@ -42,7 +42,11 @@ pub fn handle_key_events(key_event: KeyEvent, app: &mut App) -> AppResult<()> {
     }
     match key_event.code {
         KeyCode::Esc | KeyCode::Char('q') => {
-            app.quit();
+            if app.show_details {
+                app.show_details = false;
+            } else {
+                app.quit();
+            }
         }
         KeyCode::Char('c') | KeyCode::Char('C') => {
             if key_event.modifiers == KeyModifiers::CONTROL {
@@ -60,7 +64,9 @@ pub fn handle_key_events(key_event: KeyEvent, app: &mut App) -> AppResult<()> {
                 app.input.handle_event(&Event::Key(key_event));
             }
         }
+        KeyCode::Enter => app.show_details = !app.show_details,
         _ => {}
     }
+    app.show_details = key_event == KeyCode::Enter.into();
     Ok(())
 }
