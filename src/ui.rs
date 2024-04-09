@@ -31,7 +31,7 @@ pub fn render(app: &mut App, frame: &mut Frame) {
                 .description
                 .description_data
                 .iter()
-                .find(|desc| desc.lang == String::from("en"))
+                .find(|desc| desc.lang == *"en")
             {
                 Some(v) => textwrap::wrap(
                     &v.value,

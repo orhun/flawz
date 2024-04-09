@@ -31,7 +31,7 @@ pub fn handle_key_events(key_event: KeyEvent, app: &mut App) -> AppResult<()> {
                             .description
                             .description_data
                             .iter()
-                            .find(|desc| desc.lang == String::from("en"))
+                            .find(|desc| desc.lang == *"en")
                             .map(|v| v.value.to_string())
                             .unwrap_or_default()
                             .contains(&query)
