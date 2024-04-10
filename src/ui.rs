@@ -1,9 +1,9 @@
 use crate::app::App;
 use ratatui::{
-    layout::{Constraint, Rect},
+    layout::{Alignment, Constraint, Layout, Rect},
     style::{Color, Style, Stylize},
-    text::Line,
-    widgets::{Block, Clear, Row, Table, TableState},
+    text::{Line, Span},
+    widgets::{Block, Clear, Paragraph, Row, Table, TableState},
     Frame,
 };
 use tui_input::Input;
@@ -12,9 +12,39 @@ use tui_popup::Popup;
 /// Maximum number of elements to show in the table.
 const TABLE_PAGE_LIMIT: usize = 50;
 
+/// Key bindings.
+const KEY_BINDINGS: &[(&[&str], &str)] = &[
+    (&["Enter"], "Details"),
+    (&["s", "/"], "Search"),
+    (&["↕", "j/k"], "Next/Prev"),
+    (&["q"], "Quit"),
+];
+
 /// Renders the user interface widgets.
 pub fn render(app: &mut App, frame: &mut Frame) {
-    let area = frame.size();
+    let rects =
+        Layout::vertical([Constraint::Percentage(100), Constraint::Min(1)]).split(frame.size());
+    frame.render_widget(
+        Paragraph::new(
+            Line::from(
+                KEY_BINDINGS
+                    .iter()
+                    .flat_map(|(keys, desc)| {
+                        vec![
+                            "<".fg(Color::Rgb(100, 100, 100)),
+                            keys.join("-").green(),
+                            ": ".fg(Color::Rgb(100, 100, 100)),
+                            Span::from(*desc),
+                            "> ".fg(Color::Rgb(100, 100, 100)),
+                        ]
+                    })
+                    .collect::<Vec<Span>>(),
+            )
+            .alignment(Alignment::Center),
+        ),
+        rects[1],
+    );
+    let area = rects[0];
     let selected_index = app.list.state.selected().unwrap_or_default();
     let items_len = app.list.items.len();
     let page = selected_index / TABLE_PAGE_LIMIT;
