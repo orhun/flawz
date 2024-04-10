@@ -1,6 +1,7 @@
 use ratatui::backend::CrosstermBackend;
 use ratatui::Terminal;
 use std::io;
+use std::path::Path;
 use tui_jan::app::{App, AppResult};
 use tui_jan::error::Error;
 use tui_jan::event::{Event, EventHandler};
@@ -11,16 +12,13 @@ use nvd_cve::cache::{get_all, sync_blocking, CacheConfig};
 use nvd_cve::client::{BlockingHttpClient, ReqwestBlockingClient};
 
 fn main() -> AppResult<()> {
+    // Fetch CVEs.
     let mut config = CacheConfig::new();
     config.feeds = vec!["2024".to_string()];
-
-    let client = ReqwestBlockingClient::new(&config.url, None, None, None);
-
-    if let Err(error) = sync_blocking(&config, client) {
-        eprintln!("Fatal Error while syncing feeds: {:?}", error);
-        std::process::exit(1);
+    if !Path::new(&config.db).exists() {
+        let client = ReqwestBlockingClient::new(&config.url, None, None, None);
+        sync_blocking(&config, client).map_err(Error::CacheError)?;
     }
-
     let cves = get_all(&config).map_err(Error::CacheError)?;
 
     // Create an application.
