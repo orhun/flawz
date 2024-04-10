@@ -81,7 +81,10 @@ pub fn render(app: &mut App, frame: &mut Frame) {
         });
     frame.render_stateful_widget(
         Table::new(items, &[Constraint::Min(13), Constraint::Percentage(100)])
-            .header(Row::new(vec!["Name", "Description"]))
+            .header(Row::new(vec![
+                "Name".white().bold(),
+                "Description".white().bold(),
+            ]))
             .block(block)
             .highlight_style(Style::default().fg(Color::Green)),
         area,
