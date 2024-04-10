@@ -18,3 +18,6 @@ pub mod handler;
 
 /// Error implementation.
 pub mod error;
+
+/// Command-line arguments.
+pub mod args;

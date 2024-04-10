@@ -1,8 +1,9 @@
+use clap::Parser;
 use ratatui::backend::CrosstermBackend;
 use ratatui::Terminal;
 use std::io;
-use std::path::Path;
 use tui_jan::app::{App, AppResult};
+use tui_jan::args::Args;
 use tui_jan::error::Error;
 use tui_jan::event::{Event, EventHandler};
 use tui_jan::handler::handle_key_events;
@@ -12,10 +13,18 @@ use nvd_cve::cache::{get_all, sync_blocking, CacheConfig};
 use nvd_cve::client::{BlockingHttpClient, ReqwestBlockingClient};
 
 fn main() -> AppResult<()> {
+    // Parse command-line arguments.
+    let args = Args::parse();
+
     // Fetch CVEs.
-    let mut config = CacheConfig::new();
-    config.feeds = vec!["2024".to_string()];
-    if !Path::new(&config.db).exists() {
+    let config = CacheConfig {
+        url: args.url,
+        feeds: args.feeds,
+        db: args.db.unwrap_or_else(CacheConfig::default_db_path),
+        show_progress: true,
+        force_update: args.force_update,
+    };
+    if !args.offline {
         let client = ReqwestBlockingClient::new(&config.url, None, None, None);
         sync_blocking(&config, client).map_err(Error::CacheError)?;
     }

@@ -13,3 +13,4 @@ thiserror = "1.0.58"
 textwrap = "0.16.1"
 tui-input = "0.8.0"
 tui-popup = "0.2.4"
+clap = { version = "4.5.4", features = ["derive", "env", "wrap_help", "cargo"] }
