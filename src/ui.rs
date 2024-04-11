@@ -1,9 +1,12 @@
 use crate::app::App;
 use ratatui::{
-    layout::{Alignment, Constraint, Layout, Rect},
+    layout::{Alignment, Constraint, Layout, Margin, Rect},
     style::{Color, Style, Stylize},
     text::{Line, Span},
-    widgets::{Block, Clear, Paragraph, Row, Table, TableState},
+    widgets::{
+        Block, Clear, Paragraph, Row, Scrollbar, ScrollbarOrientation, ScrollbarState, Table,
+        TableState,
+    },
     Frame,
 };
 use tui_input::Input;
@@ -119,6 +122,16 @@ pub fn render(app: &mut App, frame: &mut Frame) {
             .highlight_style(Style::default().fg(Color::Green)),
         area,
         &mut table_state,
+    );
+    frame.render_stateful_widget(
+        Scrollbar::new(ScrollbarOrientation::VerticalRight)
+            .begin_symbol(Some("↑"))
+            .end_symbol(Some("↓")),
+        area.inner(&Margin {
+            vertical: 1,
+            horizontal: 0,
+        }),
+        &mut ScrollbarState::new(items_len).position(selected_index),
     );
     render_cursor(app, area, frame);
     render_details(app, area, frame);
