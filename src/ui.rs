@@ -213,14 +213,31 @@ fn render_details(app: &mut App, area: Rect, frame: &mut Frame<'_>) {
             .into();
             lines.push(reference_line);
         }
+        if lines.len() > area.height.saturating_sub(2) as usize {
+            lines = lines.into_iter().skip(app.scroll_index).collect();
+        }
         let popup = Popup::new(
             vec![
                 "|".fg(Color::Rgb(100, 100, 100)),
                 "Details".white().bold(),
                 "|".fg(Color::Rgb(100, 100, 100)),
             ],
-            lines,
+            lines.clone(),
         );
         frame.render_widget(popup.to_widget(), area);
+        app.scroll_details = lines.len() > area.height.saturating_sub(2) as usize;
+        if app.scroll_details {
+            frame.render_stateful_widget(
+                Scrollbar::new(ScrollbarOrientation::VerticalRight)
+                    .begin_symbol(Some("↑"))
+                    .end_symbol(Some("↓")),
+                area.inner(&Margin {
+                    vertical: 1,
+                    horizontal: 0,
+                }),
+                &mut ScrollbarState::new(lines.len().saturating_sub(area.height as usize) + 2)
+                    .position(app.scroll_index),
+            );
+        }
     }
 }

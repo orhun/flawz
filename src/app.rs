@@ -20,6 +20,10 @@ pub struct App {
     pub input_mode: bool,
     /// Show details.
     pub show_details: bool,
+    /// Scroll index for details.
+    pub scroll_index: usize,
+    /// Whether if the details is currently scrollable.
+    pub scroll_details: bool,
 }
 
 impl App {
@@ -32,6 +36,8 @@ impl App {
             input: Input::default(),
             input_mode: false,
             show_details: false,
+            scroll_index: 0,
+            scroll_details: false,
         }
     }
 

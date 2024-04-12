@@ -53,8 +53,24 @@ pub fn handle_key_events(key_event: KeyEvent, app: &mut App) -> AppResult<()> {
                 app.quit();
             }
         }
-        KeyCode::Down | KeyCode::Char('j') => app.list.next(),
-        KeyCode::Up | KeyCode::Char('k') => app.list.previous(),
+        KeyCode::Down | KeyCode::Char('j') => {
+            if app.show_details && app.scroll_details {
+                app.scroll_index = app.scroll_index.saturating_add(1);
+            } else {
+                app.list.next();
+                app.show_details = false;
+            }
+            return Ok(());
+        }
+        KeyCode::Up | KeyCode::Char('k') => {
+            if app.show_details && app.scroll_details {
+                app.scroll_index = app.scroll_index.saturating_sub(1);
+            } else {
+                app.list.previous();
+                app.show_details = false;
+            }
+            return Ok(());
+        }
         KeyCode::Char('/') | KeyCode::Char('s') => {
             app.input_mode = true;
         }
@@ -64,7 +80,10 @@ pub fn handle_key_events(key_event: KeyEvent, app: &mut App) -> AppResult<()> {
                 app.input.handle_event(&Event::Key(key_event));
             }
         }
-        KeyCode::Enter => app.show_details = !app.show_details,
+        KeyCode::Enter => {
+            app.scroll_index = 0;
+            app.show_details = !app.show_details;
+        }
         _ => {}
     }
     app.show_details = key_event == KeyCode::Enter.into();
