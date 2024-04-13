@@ -18,8 +18,8 @@ fn main() -> AppResult<()> {
 
     // Fetch CVEs.
     let config = CacheConfig {
-        url: args.url,
-        feeds: args.feeds,
+        url: args.url.to_string(),
+        feeds: args.feeds()?,
         db: args.db.unwrap_or_else(CacheConfig::default_db_path),
         show_progress: true,
         force_update: args.force_update,

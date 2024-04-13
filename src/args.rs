@@ -1,5 +1,7 @@
 use clap::Parser;
 
+use crate::{app::AppResult, error::Error};
+
 #[derive(Debug, Default, Parser)]
 #[clap(
     version,
@@ -21,7 +23,7 @@ pub struct Args {
         short,
         long,
         env,
-        default_value = "https://nvd.nist.gov/feeds/json/cve/1.1"
+        default_value = "https://nvd.nist.gov/feeds/json/cve/1.1/"
     )]
     pub url: String,
 
@@ -31,7 +33,7 @@ pub struct Args {
         long,
         env,
         num_args(0..),
-        default_values_t = ["2024".to_string(), "recent".into(), "modified".into()]
+        default_values_t = ["2002:2024".to_string(), "recent".into(), "modified".into()]
     )]
     pub feeds: Vec<String>,
 
@@ -46,6 +48,35 @@ pub struct Args {
     /// Do not fetch feeds.
     #[arg(long)]
     pub offline: bool,
+}
+
+impl Args {
+    /// Parses and returns the feeds.
+    pub fn feeds(&self) -> AppResult<Vec<String>> {
+        self.feeds
+            .iter()
+            .try_fold::<Vec<_>, _, AppResult<_>>(vec![], |mut acc, v| {
+                if v.contains(':') {
+                    let mut parts = v.split(':');
+                    let start = parts
+                        .next()
+                        .and_then(|v| v.parse::<usize>().ok())
+                        .ok_or_else(|| Error::RangeArgsError)?;
+                    let end = parts
+                        .next()
+                        .and_then(|v| v.parse::<usize>().ok())
+                        .ok_or_else(|| Error::RangeArgsError)?;
+                    acc.extend(
+                        (start..=end)
+                            .map(|v| v.to_string())
+                            .collect::<Vec<String>>(),
+                    );
+                } else {
+                    acc.push(v.clone())
+                }
+                Ok(acc)
+            })
+    }
 }
 
 #[cfg(test)]
