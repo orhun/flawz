@@ -1,13 +1,15 @@
 use clap::Parser;
 use ratatui::backend::CrosstermBackend;
 use ratatui::Terminal;
-use std::io;
+use std::{io, thread};
 use tui_jan::app::{App, AppResult};
 use tui_jan::args::Args;
+use tui_jan::cve::Cve;
 use tui_jan::error::Error;
 use tui_jan::event::{Event, EventHandler};
 use tui_jan::handler::handle_key_events;
 use tui_jan::tui::Tui;
+use tui_jan::widgets::SelectableList;
 
 use nvd_cve::cache::{get_all, sync_blocking, CacheConfig};
 use nvd_cve::client::{BlockingHttpClient, ReqwestBlockingClient};
@@ -31,7 +33,7 @@ fn main() -> AppResult<()> {
     let cves = get_all(&config).map_err(Error::CacheError)?;
 
     // Create an application.
-    let mut app = App::new(cves);
+    let mut app = App::new(cves.into_iter().map(Cve::from).collect());
 
     // Initialize the terminal user interface.
     let backend = CrosstermBackend::new(io::stderr());
@@ -47,9 +49,30 @@ fn main() -> AppResult<()> {
         // Handle events.
         match tui.events.next()? {
             Event::Tick => app.tick(),
-            Event::Key(key_event) => handle_key_events(key_event, &mut app)?,
+            Event::Key(key_event) => handle_key_events(key_event, &mut app, &tui.events.sender)?,
             Event::Mouse(_) => {}
             Event::Resize(_, _) => {}
+            Event::Search => {
+                let query = app.input.value().to_lowercase();
+                let items = app.cves.clone();
+                let sender = tui.events.sender.clone();
+                thread::spawn(move || {
+                    let items = items
+                        .into_iter()
+                        .filter(|cve| {
+                            query.is_empty()
+                                || cve.id.to_lowercase().contains(&query)
+                                || cve.description.clone().unwrap_or_default().contains(&query)
+                        })
+                        .collect();
+                    sender
+                        .send(Event::SearchResult(SelectableList::with_items(items)))
+                        .unwrap();
+                });
+            }
+            Event::SearchResult(v) => {
+                app.list = v;
+            }
         }
     }
 

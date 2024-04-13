@@ -1,5 +1,7 @@
 use thiserror::Error as ThisError;
 
+use crate::event::Event;
+
 /// Custom error type.
 #[derive(Debug, ThisError)]
 pub enum Error {
@@ -9,6 +11,9 @@ pub enum Error {
     /// Error that may occur while receiving messages from the channel.
     #[error("channel receive error: `{0}`")]
     ChannelReceiveError(#[from] std::sync::mpsc::RecvError),
+    /// Error that may occur while sending messages to the channel.
+    #[error("channel send error: `{0}`")]
+    ChannelSendError(#[from] std::sync::mpsc::SendError<Event>),
     /// Error that is related to CVE cache.
     #[error("CVE cache error: `{0:?}`")]
     CacheError(nvd_cve::cache::CacheError),

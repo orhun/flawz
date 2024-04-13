@@ -1,11 +1,13 @@
 use crate::app::AppResult;
+use crate::cve::Cve;
+use crate::widgets::SelectableList;
 use crossterm::event::{self, Event as CrosstermEvent, KeyEvent, MouseEvent};
 use std::sync::mpsc;
 use std::thread;
 use std::time::{Duration, Instant};
 
 /// Terminal events.
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Debug)]
 pub enum Event {
     /// Terminal tick.
     Tick,
@@ -15,6 +17,10 @@ pub enum Event {
     Mouse(MouseEvent),
     /// Terminal resize.
     Resize(u16, u16),
+    /// Search event.
+    Search,
+    /// Process search results.
+    SearchResult(SelectableList<Cve>),
 }
 
 /// Terminal event handler.
@@ -22,7 +28,7 @@ pub enum Event {
 #[derive(Debug)]
 pub struct EventHandler {
     /// Event sender channel.
-    sender: mpsc::Sender<Event>,
+    pub sender: mpsc::Sender<Event>,
     /// Event receiver channel.
     receiver: mpsc::Receiver<Event>,
     /// Event handler thread.

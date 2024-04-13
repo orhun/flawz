@@ -1,12 +1,15 @@
-use crate::{
-    app::{App, AppResult},
-    widgets::SelectableList,
-};
+use crate::app::{App, AppResult};
+use crate::event::Event as TuiEvent;
 use crossterm::event::{Event, KeyCode, KeyEvent, KeyModifiers};
+use std::sync::mpsc::Sender;
 use tui_input::{backend::crossterm::EventHandler, Input};
 
 /// Handles the key events and updates the state of [`App`].
-pub fn handle_key_events(key_event: KeyEvent, app: &mut App) -> AppResult<()> {
+pub fn handle_key_events(
+    key_event: KeyEvent,
+    app: &mut App,
+    sender: &Sender<TuiEvent>,
+) -> AppResult<()> {
     if app.input_mode {
         if key_event.code == KeyCode::Char('q')
             || key_event.code == KeyCode::Esc
@@ -19,25 +22,7 @@ pub fn handle_key_events(key_event: KeyEvent, app: &mut App) -> AppResult<()> {
         } else {
             app.input.handle_event(&Event::Key(key_event));
         }
-        let query = app.input.value().to_lowercase();
-        app.list = SelectableList::with_items(
-            app.cves
-                .clone()
-                .into_iter()
-                .filter(|cve| {
-                    app.input.value().is_empty()
-                        || cve.cve_data_meta.id.to_lowercase().contains(&query)
-                        || cve
-                            .description
-                            .description_data
-                            .iter()
-                            .find(|desc| desc.lang == *"en")
-                            .map(|v| v.value.to_string())
-                            .unwrap_or_default()
-                            .contains(&query)
-                })
-                .collect(),
-        );
+        sender.send(TuiEvent::Search)?;
         return Ok(());
     }
     match key_event.code {

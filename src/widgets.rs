@@ -1,7 +1,7 @@
 use ratatui::widgets::TableState as State;
 
 /// List widget with TUI controlled states.
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct SelectableList<T> {
     /// List items.
     pub items: Vec<T>,

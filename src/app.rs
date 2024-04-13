@@ -1,5 +1,4 @@
-use crate::{error::Error, widgets::SelectableList};
-use nvd_cve::cve::Cve;
+use crate::{cve::Cve, error::Error, widgets::SelectableList};
 use tui_input::Input;
 
 /// Type alias for the standard [`Result`] type.

@@ -21,3 +21,6 @@ pub mod error;
 
 /// Command-line arguments.
 pub mod args;
+
+/// CVE wrapper.
+pub mod cve;

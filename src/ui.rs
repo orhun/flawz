@@ -60,20 +60,15 @@ pub fn render(app: &mut App, frame: &mut Frame) {
         .skip(page * TABLE_PAGE_LIMIT)
         .take(TABLE_PAGE_LIMIT)
         .map(|cve| {
-            let description = match cve
-                .description
-                .description_data
-                .iter()
-                .find(|desc| desc.lang == *"en")
-            {
+            let description = match &cve.description {
                 Some(v) => textwrap::wrap(
-                    &v.value,
+                    &v,
                     textwrap::Options::new(area.width.saturating_sub(15) as usize),
                 )
                 .join("\n"),
                 None => "No description available.".into(),
             };
-            Row::new(vec![cve.cve_data_meta.id.to_string(), description])
+            Row::new(vec![cve.id.to_string(), description])
                 .height(2)
                 .bottom_margin(2)
         });
@@ -164,18 +159,23 @@ fn render_cursor(state: &mut App, area: Rect, frame: &mut Frame<'_>) {
 /// Render the details popup.
 fn render_details(app: &mut App, area: Rect, frame: &mut Frame<'_>) {
     if let (true, Some(cve)) = (app.show_details, app.list.selected()) {
-        let description = cve.description.description_data[0].value.trim().to_string();
+        let description = cve
+            .description
+            .clone()
+            .unwrap_or_default()
+            .trim()
+            .to_string();
         let mut lines = vec![
             vec![
                 "ID".white().bold(),
                 ": ".fg(Color::Rgb(100, 100, 100)),
-                cve.cve_data_meta.id.to_string().into(),
+                cve.id.to_string().into(),
             ]
             .into(),
             vec![
                 "Assigner".white().bold(),
                 ": ".fg(Color::Rgb(100, 100, 100)),
-                cve.cve_data_meta.assigner.to_string().into(),
+                cve.assigner.to_string().into(),
             ]
             .into(),
         ];
@@ -204,11 +204,11 @@ fn render_details(app: &mut App, area: Rect, frame: &mut Frame<'_>) {
                     .collect::<Vec<Line>>(),
             );
         }
-        for reference in &cve.references.reference_data {
+        for reference in &cve.references {
             let reference_line = vec![
                 "Reference".white().bold(),
                 ": ".fg(Color::Rgb(100, 100, 100)),
-                reference.url.to_string().into(),
+                reference.to_string().into(),
             ]
             .into();
             lines.push(reference_line);
