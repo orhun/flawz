@@ -62,7 +62,7 @@ pub fn render(app: &mut App, frame: &mut Frame) {
         .map(|cve| {
             let description = match &cve.description {
                 Some(v) => textwrap::wrap(
-                    &v,
+                    v,
                     textwrap::Options::new(area.width.saturating_sub(15) as usize),
                 )
                 .join("\n"),
