@@ -62,7 +62,12 @@ fn main() -> AppResult<()> {
                         .filter(|cve| {
                             query.is_empty()
                                 || cve.id.to_lowercase().contains(&query)
-                                || cve.description.clone().unwrap_or_default().contains(&query)
+                                || cve
+                                    .description
+                                    .clone()
+                                    .unwrap_or_default()
+                                    .to_lowercase()
+                                    .contains(&query)
                         })
                         .collect();
                     sender
