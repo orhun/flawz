@@ -39,6 +39,7 @@ fn main() -> AppResult<()> {
         args.theme
             .get_theme()
             .ok_or_else(|| Error::ParseColorError)?,
+        args.query.clone().unwrap_or_default(),
     );
 
     // Initialize the terminal user interface.
@@ -47,6 +48,10 @@ fn main() -> AppResult<()> {
     let events = EventHandler::new(250);
     let mut tui = Tui::new(terminal, events);
     tui.init()?;
+
+    if !args.query.unwrap_or_default().is_empty() {
+        tui.events.sender.send(Event::Search)?;
+    }
 
     // Start the main loop.
     while app.running {

@@ -29,13 +29,17 @@ pub struct App {
 
 impl App {
     /// Constructs a new instance of [`App`].
-    pub fn new(cves: Vec<Cve>, theme: Theme) -> Self {
+    pub fn new(cves: Vec<Cve>, theme: Theme, query: String) -> Self {
         Self {
             running: true,
             theme,
             cves: cves.clone(),
             list: SelectableList::with_items(cves),
-            input: Input::default(),
+            input: if query.is_empty() {
+                Input::default()
+            } else {
+                Input::new(query)
+            },
             input_mode: false,
             show_details: false,
             scroll_index: 0,

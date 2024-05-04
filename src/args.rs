@@ -47,8 +47,12 @@ pub struct Args {
     pub force_update: bool,
 
     /// Do not fetch feeds.
-    #[arg(long)]
+    #[arg(short, long)]
     pub offline: bool,
+
+    /// Start with the search query.
+    #[arg(short, env, long)]
+    pub query: Option<String>,
 
     /// Sets the theme.
     #[arg(short, long, value_enum, default_value = "dracula")]
