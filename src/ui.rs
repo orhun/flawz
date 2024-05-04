@@ -237,7 +237,8 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
                 "|".set_style(app.theme.indicator),
             ],
             lines.clone(),
-        );
+        )
+        .style(app.theme.background);
         frame.render_widget(popup.to_widget(), area);
         app.scroll_details = lines.len() > area.height.saturating_sub(2) as usize;
         if app.scroll_details {
@@ -248,7 +249,10 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
                     .end_symbol(Some("↓")),
                 area.inner(&Margin {
                     vertical: 1,
-                    horizontal: 0,
+                    horizontal: (area.width.saturating_sub(
+                        lines.iter().map(|v| v.width()).max().unwrap_or_default() as u16,
+                    ) / 2)
+                        .saturating_sub(1),
                 }),
                 &mut ScrollbarState::new(lines.len().saturating_sub(area.height as usize) + 2)
                     .position(app.scroll_index),
