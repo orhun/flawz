@@ -25,29 +25,20 @@ const KEY_BINDINGS: &[(&[&str], &str)] = &[
 
 /// Renders the user interface widgets.
 pub fn render(app: &mut App, frame: &mut Frame) {
-    let rects =
-        Layout::vertical([Constraint::Percentage(100), Constraint::Min(1)]).split(frame.size());
-    frame.render_widget(
-        Paragraph::new(
-            Line::from(
-                KEY_BINDINGS
-                    .iter()
-                    .flat_map(|(keys, desc)| {
-                        vec![
-                            "<".fg(Color::Rgb(100, 100, 100)),
-                            keys.join("-").green(),
-                            ": ".fg(Color::Rgb(100, 100, 100)),
-                            Span::from(*desc),
-                            "> ".fg(Color::Rgb(100, 100, 100)),
-                        ]
-                    })
-                    .collect::<Vec<Span>>(),
-            )
-            .alignment(Alignment::Center),
-        ),
-        rects[1],
-    );
-    let area = rects[0];
+    let rects = Layout::vertical([
+        Constraint::Min(1),
+        Constraint::Percentage(100),
+        Constraint::Min(1),
+    ])
+    .split(frame.size());
+    render_title(frame, rects[0]);
+    render_list(app, frame, rects[1]);
+    render_cursor(app, frame, rects[1]);
+    render_details(app, frame, rects[1]);
+    render_key_bindings(frame, rects[2]);
+}
+
+fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
     let selected_index = app.list.state.selected().unwrap_or_default();
     let items_len = app.list.items.len();
     let page = selected_index / TABLE_PAGE_LIMIT;
@@ -88,14 +79,6 @@ pub fn render(app: &mut App, frame: &mut Frame) {
             }
             .right_aligned(),
         )
-        .title_top(
-            Line::from(vec![
-                "|".fg(Color::Rgb(100, 100, 100)),
-                env!("CARGO_PKG_NAME").white().bold(),
-                "|".fg(Color::Rgb(100, 100, 100)),
-            ])
-            .centered(),
-        )
         .title_bottom(if !app.input.value().is_empty() || app.input_mode {
             Line::from(vec![
                 "|".fg(Color::Rgb(100, 100, 100)),
@@ -128,12 +111,50 @@ pub fn render(app: &mut App, frame: &mut Frame) {
         }),
         &mut ScrollbarState::new(items_len).position(selected_index),
     );
-    render_cursor(app, area, frame);
-    render_details(app, area, frame);
+}
+
+fn render_key_bindings(frame: &mut Frame<'_>, area: Rect) {
+    frame.render_widget(
+        Paragraph::new(
+            Line::from(
+                KEY_BINDINGS
+                    .iter()
+                    .flat_map(|(keys, desc)| {
+                        vec![
+                            "<".fg(Color::Rgb(100, 100, 100)),
+                            keys.join("-").green(),
+                            ": ".fg(Color::Rgb(100, 100, 100)),
+                            Span::from(*desc),
+                            "> ".fg(Color::Rgb(100, 100, 100)),
+                        ]
+                    })
+                    .collect::<Vec<Span>>(),
+            )
+            .alignment(Alignment::Center),
+        ),
+        area,
+    );
+}
+
+fn render_title(frame: &mut Frame<'_>, area: Rect) {
+    let title = Paragraph::new(format!(
+        " {} - {} ",
+        env!("CARGO_PKG_NAME"),
+        env!("CARGO_PKG_DESCRIPTION")
+    ))
+    .block(Block::default())
+    .alignment(Alignment::Left);
+    frame.render_widget(title, area);
+
+    let text = format!("v{} with ♥ by @orhun ", env!("CARGO_PKG_VERSION"));
+    let meta = Paragraph::new(text)
+        .block(Block::default())
+        .alignment(Alignment::Right);
+    frame.render_widget(meta, area);
 }
 
 /// Renders the cursor.
-fn render_cursor(state: &mut App, area: Rect, frame: &mut Frame<'_>) {
+fn render_cursor(state: &mut App, frame: &mut Frame<'_>, area: Rect) {
     if state.input_mode {
         let (x, y) = (
             area.x
@@ -157,7 +178,7 @@ fn render_cursor(state: &mut App, area: Rect, frame: &mut Frame<'_>) {
 }
 
 /// Render the details popup.
-fn render_details(app: &mut App, area: Rect, frame: &mut Frame<'_>) {
+fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
     if let (true, Some(cve)) = (app.show_details, app.list.selected()) {
         let description = cve
             .description

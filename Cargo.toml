@@ -1,6 +1,7 @@
 [package]
 name = "tui-jan"
 version = "0.1.0"
+description = "A Terminal UI for browsing CVEs"
 authors = ["Orhun Parmaksız <orhunparmaksiz@gmail.com>"]
 license = "MIT"
 edition = "2021"
