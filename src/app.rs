@@ -29,10 +29,10 @@ pub struct App {
 
 impl App {
     /// Constructs a new instance of [`App`].
-    pub fn new(cves: Vec<Cve>) -> Self {
+    pub fn new(cves: Vec<Cve>, theme: Theme) -> Self {
         Self {
             running: true,
-            theme: Theme::default(),
+            theme,
             cves: cves.clone(),
             list: SelectableList::with_items(cves),
             input: Input::default(),

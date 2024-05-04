@@ -1,6 +1,6 @@
 use clap::Parser;
 
-use crate::{app::AppResult, error::Error};
+use crate::{app::AppResult, error::Error, theme::BuiltinTheme};
 
 #[derive(Debug, Default, Parser)]
 #[clap(
@@ -48,6 +48,10 @@ pub struct Args {
     /// Do not fetch feeds.
     #[arg(long)]
     pub offline: bool,
+
+    /// Sets the theme.
+    #[arg(short, long, value_enum, default_value = "dracula")]
+    pub theme: BuiltinTheme,
 }
 
 impl Args {

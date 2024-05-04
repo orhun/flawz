@@ -17,6 +17,9 @@ pub enum Error {
     /// Error that is related to CVE cache.
     #[error("CVE cache error: `{0:?}`")]
     CacheError(nvd_cve::cache::CacheError),
+    /// Error that may occur while parsing colors.
+    #[error("Failed to parse color")]
+    ParseColorError,
     /// Error that can occur while parsing the arguments.
     #[error("Invalid range given. Please use the format <start:end>")]
     RangeArgsError,

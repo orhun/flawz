@@ -1,6 +1,7 @@
 use clap::Parser;
 use ratatui::backend::CrosstermBackend;
 use ratatui::Terminal;
+use std::path::Path;
 use std::{io, thread};
 use tui_jan::app::{App, AppResult};
 use tui_jan::args::Args;
@@ -26,14 +27,19 @@ fn main() -> AppResult<()> {
         show_progress: true,
         force_update: args.force_update,
     };
-    if !args.offline {
+    if !args.offline && !Path::new(&config.db).exists() {
         let client = ReqwestBlockingClient::new(&config.url, None, None, None);
         sync_blocking(&config, client).map_err(Error::CacheError)?;
     }
     let cves = get_all(&config).map_err(Error::CacheError)?;
 
     // Create an application.
-    let mut app = App::new(cves.into_iter().map(Cve::from).collect());
+    let mut app = App::new(
+        cves.into_iter().map(Cve::from).collect(),
+        args.theme
+            .get_theme()
+            .ok_or_else(|| Error::ParseColorError)?,
+    );
 
     // Initialize the terminal user interface.
     let backend = CrosstermBackend::new(io::stderr());
