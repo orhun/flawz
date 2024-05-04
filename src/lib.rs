@@ -10,6 +10,9 @@ pub mod ui;
 /// Terminal user interface.
 pub mod tui;
 
+/// Application theme.
+pub mod theme;
+
 /// Custom widgets.
 pub mod widgets;
 

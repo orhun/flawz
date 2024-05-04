@@ -1,4 +1,4 @@
-use crate::{cve::Cve, error::Error, widgets::SelectableList};
+use crate::{cve::Cve, error::Error, theme::Theme, widgets::SelectableList};
 use tui_input::Input;
 
 /// Type alias for the standard [`Result`] type.
@@ -9,6 +9,8 @@ pub type AppResult<T> = std::result::Result<T, Error>;
 pub struct App {
     /// Is the application running?
     pub running: bool,
+    /// Application theme.
+    pub theme: Theme,
     /// List of CVEs.
     pub cves: Vec<Cve>,
     /// List of CVE's for rendering.
@@ -30,6 +32,7 @@ impl App {
     pub fn new(cves: Vec<Cve>) -> Self {
         Self {
             running: true,
+            theme: Theme::default(),
             cves: cves.clone(),
             list: SelectableList::with_items(cves),
             input: Input::default(),

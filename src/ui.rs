@@ -1,11 +1,11 @@
 use crate::app::App;
 use ratatui::{
     layout::{Alignment, Constraint, Layout, Margin, Rect},
-    style::{Color, Style, Stylize},
+    style::{Styled, Stylize},
     text::{Line, Span},
     widgets::{
-        Block, Clear, Paragraph, Row, Scrollbar, ScrollbarOrientation, ScrollbarState, Table,
-        TableState,
+        Block, BorderType, Clear, Paragraph, Row, Scrollbar, ScrollbarOrientation, ScrollbarState,
+        Table, TableState,
     },
     Frame,
 };
@@ -25,17 +25,12 @@ const KEY_BINDINGS: &[(&[&str], &str)] = &[
 
 /// Renders the user interface widgets.
 pub fn render(app: &mut App, frame: &mut Frame) {
-    let rects = Layout::vertical([
-        Constraint::Min(1),
-        Constraint::Percentage(100),
-        Constraint::Min(1),
-    ])
-    .split(frame.size());
-    render_title(frame, rects[0]);
+    let rects =
+        Layout::vertical([Constraint::Min(1), Constraint::Percentage(100)]).split(frame.size());
+    render_header(app, frame, rects[0]);
     render_list(app, frame, rects[1]);
     render_cursor(app, frame, rects[1]);
     render_details(app, frame, rects[1]);
-    render_key_bindings(frame, rects[2]);
 }
 
 fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
@@ -61,31 +56,56 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
             };
             Row::new(vec![cve.id.to_string(), description])
                 .height(2)
-                .bottom_margin(2)
-        });
+                .top_margin(1)
+        })
+        .collect::<Vec<Row>>();
     let block = Block::bordered()
-        .border_style(Style::default().fg(Color::Rgb(100, 100, 100)))
+        .style(app.theme.background)
+        .border_style(app.theme.borders)
+        .border_type(BorderType::Double)
         .title_bottom(
             if items_len != 0 {
                 Line::from(vec![
-                    "|".fg(Color::Rgb(100, 100, 100)),
+                    "|".set_style(app.theme.indicator),
                     format!("{}/{}", selected_index.saturating_add(1), items_len)
-                        .white()
-                        .bold(),
-                    "|".fg(Color::Rgb(100, 100, 100)),
+                        .set_style(app.theme.index),
+                    "|".set_style(app.theme.indicator),
                 ])
             } else {
                 Line::default()
             }
             .right_aligned(),
         )
+        .title_bottom(
+            Line::from(
+                KEY_BINDINGS
+                    .iter()
+                    .enumerate()
+                    .flat_map(|(i, (keys, desc))| {
+                        vec![
+                            "<".set_style(app.theme.indicator),
+                            keys.join("-").set_style(app.theme.footer),
+                            ": ".set_style(app.theme.indicator),
+                            Span::from(*desc).set_style(app.theme.footer),
+                            ">".set_style(app.theme.indicator),
+                            if i != KEY_BINDINGS.len() - 1 { " " } else { "" }.into(),
+                        ]
+                    })
+                    .collect::<Vec<Span>>(),
+            )
+            .centered(),
+        )
         .title_bottom(if !app.input.value().is_empty() || app.input_mode {
             Line::from(vec![
-                "|".fg(Color::Rgb(100, 100, 100)),
-                "Search: ".bold().white(),
-                app.input.value().white(),
+                "|".set_style(app.theme.indicator),
+                "Search: ".set_style(app.theme.highlight).bold(),
+                app.input.value().set_style(if items.is_empty() {
+                    app.theme.input_empty
+                } else {
+                    app.theme.input
+                }),
                 if app.input_mode { " " } else { "" }.into(),
-                "|".fg(Color::Rgb(100, 100, 100)),
+                "|".set_style(app.theme.indicator),
             ])
         } else {
             Line::default()
@@ -93,16 +113,17 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
     frame.render_stateful_widget(
         Table::new(items, &[Constraint::Min(13), Constraint::Percentage(100)])
             .header(Row::new(vec![
-                "Name".white().bold(),
-                "Description".white().bold(),
+                "Name".set_style(app.theme.highlight).bold(),
+                "Description".set_style(app.theme.highlight).bold(),
             ]))
             .block(block)
-            .highlight_style(Style::default().fg(Color::Green)),
+            .highlight_style(app.theme.selected.bold()),
         area,
         &mut table_state,
     );
     frame.render_stateful_widget(
         Scrollbar::new(ScrollbarOrientation::VerticalRight)
+            .style(app.theme.scrollbar)
             .begin_symbol(Some("↑"))
             .end_symbol(Some("↓")),
         area.inner(&Margin {
@@ -113,53 +134,33 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
     );
 }
 
-fn render_key_bindings(frame: &mut Frame<'_>, area: Rect) {
-    frame.render_widget(
-        Paragraph::new(
-            Line::from(
-                KEY_BINDINGS
-                    .iter()
-                    .flat_map(|(keys, desc)| {
-                        vec![
-                            "<".fg(Color::Rgb(100, 100, 100)),
-                            keys.join("-").green(),
-                            ": ".fg(Color::Rgb(100, 100, 100)),
-                            Span::from(*desc),
-                            "> ".fg(Color::Rgb(100, 100, 100)),
-                        ]
-                    })
-                    .collect::<Vec<Span>>(),
-            )
-            .alignment(Alignment::Center),
-        ),
-        area,
-    );
-}
-
-fn render_title(frame: &mut Frame<'_>, area: Rect) {
-    let title = Paragraph::new(format!(
-        " {} - {} ",
-        env!("CARGO_PKG_NAME"),
-        env!("CARGO_PKG_DESCRIPTION")
-    ))
-    .block(Block::default())
+fn render_header(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
+    let title = Paragraph::new(
+        format!(
+            " {} - {} ",
+            env!("CARGO_PKG_NAME"),
+            env!("CARGO_PKG_DESCRIPTION")
+        )
+        .bold(),
+    )
+    .block(Block::default().style(app.theme.header))
     .alignment(Alignment::Left);
     frame.render_widget(title, area);
 
     let text = format!("v{} with ♥ by @orhun ", env!("CARGO_PKG_VERSION"));
     let meta = Paragraph::new(text)
-        .block(Block::default())
+        .block(Block::default().style(app.theme.header))
         .alignment(Alignment::Right);
     frame.render_widget(meta, area);
 }
 
 /// Renders the cursor.
-fn render_cursor(state: &mut App, frame: &mut Frame<'_>, area: Rect) {
-    if state.input_mode {
+fn render_cursor(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
+    if app.input_mode {
         let (x, y) = (
             area.x
                 + Input::default()
-                    .with_value(format!("Search: {}", state.input.value()))
+                    .with_value(format!("Search: {}", app.input.value()))
                     .visual_cursor() as u16
                 + 2,
             area.bottom().saturating_sub(1),
@@ -186,50 +187,42 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
             .unwrap_or_default()
             .trim()
             .to_string();
-        let mut lines = vec![
-            vec![
-                "ID".white().bold(),
-                ": ".fg(Color::Rgb(100, 100, 100)),
-                cve.id.to_string().into(),
-            ]
-            .into(),
-            vec![
-                "Assigner".white().bold(),
-                ": ".fg(Color::Rgb(100, 100, 100)),
-                cve.assigner.to_string().into(),
-            ]
-            .into(),
-        ];
+        let mut lines = vec![vec![
+            "Assigner".set_style(app.theme.foreground).bold(),
+            ": ".set_style(app.theme.indicator),
+            cve.assigner.to_string().set_style(app.theme.foreground),
+        ]
+        .into()];
         let max_row_width = (area.width - 2) / 2;
         if (Line::raw(&description).width() as u16) < max_row_width {
             lines.push(
                 vec![
-                    "Description".white().bold(),
-                    ": ".fg(Color::Rgb(100, 100, 100)),
-                    description.into(),
+                    "Description".set_style(app.theme.foreground).bold(),
+                    ": ".set_style(app.theme.indicator),
+                    description.set_style(app.theme.foreground),
                 ]
                 .into(),
             );
         } else {
             lines.push(
                 vec![
-                    "Description".white().bold(),
-                    ": ".fg(Color::Rgb(100, 100, 100)),
+                    "Description".set_style(app.theme.foreground).bold(),
+                    ": ".set_style(app.theme.indicator),
                 ]
                 .into(),
             );
             lines.extend(
                 textwrap::wrap(&description, textwrap::Options::new(max_row_width as usize))
                     .into_iter()
-                    .map(|v| v.to_string().into())
+                    .map(|v| Line::from(v.to_string()).style(app.theme.foreground))
                     .collect::<Vec<Line>>(),
             );
         }
         for reference in &cve.references {
             let reference_line = vec![
-                "Reference".white().bold(),
-                ": ".fg(Color::Rgb(100, 100, 100)),
-                reference.to_string().into(),
+                "Reference".set_style(app.theme.foreground).bold(),
+                ": ".set_style(app.theme.indicator),
+                reference.to_string().set_style(app.theme.foreground),
             ]
             .into();
             lines.push(reference_line);
@@ -239,9 +232,9 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
         }
         let popup = Popup::new(
             vec![
-                "|".fg(Color::Rgb(100, 100, 100)),
-                "Details".white().bold(),
-                "|".fg(Color::Rgb(100, 100, 100)),
+                "|".set_style(app.theme.indicator),
+                cve.id.to_string().set_style(app.theme.highlight).bold(),
+                "|".set_style(app.theme.indicator),
             ],
             lines.clone(),
         );
@@ -250,6 +243,7 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
         if app.scroll_details {
             frame.render_stateful_widget(
                 Scrollbar::new(ScrollbarOrientation::VerticalRight)
+                    .style(app.theme.scrollbar)
                     .begin_symbol(Some("↑"))
                     .end_symbol(Some("↓")),
                 area.inner(&Margin {
