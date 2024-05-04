@@ -1,3 +1,7 @@
+//! A Terminal UI for browsing CVEs.
+
+#![warn(missing_docs, clippy::unwrap_used)]
+
 /// Application.
 pub mod app;
 

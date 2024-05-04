@@ -66,10 +66,10 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
         .title_bottom(
             if items_len != 0 {
                 Line::from(vec![
-                    "|".set_style(app.theme.indicator),
+                    "|".set_style(app.theme.separator),
                     format!("{}/{}", selected_index.saturating_add(1), items_len)
                         .set_style(app.theme.index),
-                    "|".set_style(app.theme.indicator),
+                    "|".set_style(app.theme.separator),
                 ])
             } else {
                 Line::default()
@@ -83,11 +83,11 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
                     .enumerate()
                     .flat_map(|(i, (keys, desc))| {
                         vec![
-                            "<".set_style(app.theme.indicator),
+                            "<".set_style(app.theme.separator),
                             keys.join("-").set_style(app.theme.footer),
-                            ": ".set_style(app.theme.indicator),
+                            ": ".set_style(app.theme.separator),
                             Span::from(*desc).set_style(app.theme.footer),
-                            ">".set_style(app.theme.indicator),
+                            ">".set_style(app.theme.separator),
                             if i != KEY_BINDINGS.len() - 1 { " " } else { "" }.into(),
                         ]
                     })
@@ -97,7 +97,7 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
         )
         .title_bottom(if !app.input.value().is_empty() || app.input_mode {
             Line::from(vec![
-                "|".set_style(app.theme.indicator),
+                "|".set_style(app.theme.separator),
                 "Search: ".set_style(app.theme.highlight).bold(),
                 app.input.value().set_style(if items.is_empty() {
                     app.theme.input_empty
@@ -105,7 +105,7 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
                     app.theme.input
                 }),
                 if app.input_mode { " " } else { "" }.into(),
-                "|".set_style(app.theme.indicator),
+                "|".set_style(app.theme.separator),
             ])
         } else {
             Line::default()
@@ -189,7 +189,7 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
             .to_string();
         let mut lines = vec![vec![
             "Assigner".set_style(app.theme.foreground).bold(),
-            ": ".set_style(app.theme.indicator),
+            ": ".set_style(app.theme.separator),
             cve.assigner.to_string().set_style(app.theme.foreground),
         ]
         .into()];
@@ -198,7 +198,7 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
             lines.push(
                 vec![
                     "Description".set_style(app.theme.foreground).bold(),
-                    ": ".set_style(app.theme.indicator),
+                    ": ".set_style(app.theme.separator),
                     description.set_style(app.theme.foreground),
                 ]
                 .into(),
@@ -207,7 +207,7 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
             lines.push(
                 vec![
                     "Description".set_style(app.theme.foreground).bold(),
-                    ": ".set_style(app.theme.indicator),
+                    ": ".set_style(app.theme.separator),
                 ]
                 .into(),
             );
@@ -221,7 +221,7 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
         for reference in &cve.references {
             let reference_line = vec![
                 "Reference".set_style(app.theme.foreground).bold(),
-                ": ".set_style(app.theme.indicator),
+                ": ".set_style(app.theme.separator),
                 reference.to_string().set_style(app.theme.foreground),
             ]
             .into();
@@ -232,9 +232,9 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
         }
         let popup = Popup::new(
             vec![
-                "|".set_style(app.theme.indicator),
+                "|".set_style(app.theme.separator),
                 cve.id.to_string().set_style(app.theme.highlight).bold(),
-                "|".set_style(app.theme.indicator),
+                "|".set_style(app.theme.separator),
             ],
             lines.clone(),
         )

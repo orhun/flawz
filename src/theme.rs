@@ -2,16 +2,22 @@ use clap::ValueEnum;
 use ratatui::style::{Color, Style};
 use std::str::FromStr;
 
+/// Built-in theme.
 #[derive(Debug, Clone, PartialEq, ValueEnum, Default)]
 pub enum BuiltinTheme {
+    /// Dracula.
     #[default]
     Dracula,
+    /// Nord.
     Nord,
+    /// One Dark.
     OneDark,
+    /// Solarized Dark.
     SolarizedDark,
 }
 
 impl BuiltinTheme {
+    /// Parses the colors and returns the theme.
     pub fn get_theme(&self) -> Option<Theme> {
         match self {
             BuiltinTheme::Dracula => dracula_theme(),
@@ -22,19 +28,32 @@ impl BuiltinTheme {
     }
 }
 
+/// Theme.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Theme {
+    /// Background.
     pub background: Style,
+    /// Foreground.
     pub foreground: Style,
+    /// Header text.
     pub header: Style,
+    /// Footer text (key bindings).
     pub footer: Style,
+    /// Block borders.
     pub borders: Style,
-    pub indicator: Style,
+    /// Separator.
+    pub separator: Style,
+    /// Highlight text.
     pub highlight: Style,
+    /// Index (selected item).
     pub index: Style,
+    /// Input.
     pub input: Style,
+    /// Input (when nothing found).
     pub input_empty: Style,
+    /// Selected item.
     pub selected: Style,
+    /// Scrollbar.
     pub scrollbar: Style,
 }
 
@@ -55,7 +74,7 @@ fn dracula_theme() -> Option<Theme> {
             .bg(Color::from_str("#44475A").ok()?)
             .fg(Color::from_str("#FFB86C").ok()?),
         borders: Style::default().fg(Color::from_str("#44475A").ok()?),
-        indicator: Style::default().fg(Color::from_str("#6272A4").ok()?),
+        separator: Style::default().fg(Color::from_str("#6272A4").ok()?),
         highlight: Style::default().fg(Color::from_str("#F1FA8C").ok()?),
         index: Style::default().fg(Color::from_str("#BD93F9").ok()?),
         input: Style::default().fg(Color::from_str("#50FA7B").ok()?),
@@ -81,7 +100,7 @@ fn nord_theme() -> Option<Theme> {
             .bg(Color::from_str("#434C5E").ok()?)
             .fg(Color::from_str("#8FBCBB").ok()?),
         borders: Style::default().fg(Color::from_str("#4C566A").ok()?),
-        indicator: Style::default().fg(Color::from_str("#88C0D0").ok()?),
+        separator: Style::default().fg(Color::from_str("#88C0D0").ok()?),
         highlight: Style::default().fg(Color::from_str("#EBCB8B").ok()?),
         index: Style::default().fg(Color::from_str("#E5E9F0").ok()?),
         input: Style::default().fg(Color::from_str("#A3BE8C").ok()?),
@@ -107,7 +126,7 @@ fn one_dark_theme() -> Option<Theme> {
             .bg(Color::from_str("#3E4451").ok()?)
             .fg(Color::from_str("#E06C75").ok()?),
         borders: Style::default().fg(Color::from_str("#4B5363").ok()?),
-        indicator: Style::default().fg(Color::from_str("#4B5363").ok()?),
+        separator: Style::default().fg(Color::from_str("#4B5363").ok()?),
         highlight: Style::default().fg(Color::from_str("#98C379").ok()?),
         index: Style::default().fg(Color::from_str("#D19A66").ok()?),
         input: Style::default().fg(Color::from_str("#56B6C2").ok()?),
@@ -133,7 +152,7 @@ fn solarized_dark_theme() -> Option<Theme> {
             .bg(Color::from_str("#073642").ok()?)
             .fg(Color::from_str("#B58900").ok()?),
         borders: Style::default().fg(Color::from_str("#586E75").ok()?),
-        indicator: Style::default().fg(Color::from_str("#268BD2").ok()?),
+        separator: Style::default().fg(Color::from_str("#268BD2").ok()?),
         highlight: Style::default().fg(Color::from_str("#93A1A1").ok()?),
         index: Style::default().fg(Color::from_str("#93A1A1").ok()?),
         input: Style::default().fg(Color::from_str("#859900").ok()?),

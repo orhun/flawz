@@ -2,6 +2,7 @@ use clap::Parser;
 
 use crate::{app::AppResult, error::Error, theme::BuiltinTheme};
 
+/// Command line arguments.
 #[derive(Debug, Default, Parser)]
 #[clap(
     version,

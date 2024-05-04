@@ -1,10 +1,15 @@
 use nvd_cve::cve::Cve as NvdCve;
 
+/// CVE.
 #[derive(Clone, Debug)]
 pub struct Cve {
+    /// ID.
     pub id: String,
+    /// Description.
     pub description: Option<String>,
+    /// Assigner.
     pub assigner: String,
+    /// References.
     pub references: Vec<String>,
 }
 
