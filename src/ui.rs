@@ -251,8 +251,7 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
                     vertical: 1,
                     horizontal: (area.width.saturating_sub(
                         lines.iter().map(|v| v.width()).max().unwrap_or_default() as u16,
-                    ) / 2)
-                        .saturating_sub(1),
+                    ) / 2),
                 }),
                 &mut ScrollbarState::new(lines.len().saturating_sub(area.height as usize) + 2)
                     .position(app.scroll_index),
