@@ -33,6 +33,8 @@ impl BuiltinTheme {
 pub struct Theme {
     /// Background.
     pub background: Style,
+    /// Dim.
+    pub dim: Style,
     /// Foreground.
     pub foreground: Style,
     /// Header text.
@@ -63,6 +65,9 @@ fn dracula_theme() -> Option<Theme> {
         background: Style::default()
             .bg(Color::from_str("#282A36").ok()?)
             .fg(Color::from_str("#F8F8F2").ok()?),
+        dim: Style::default()
+            .bg(Color::from_str("#282A36").ok()?)
+            .fg(Color::from_str("#44475A").ok()?),
         foreground: Style::default().fg(Color::from_str("#F8F8F2").ok()?),
         header: Style::default()
             .bg(Color::from_str("#BD93F9").ok()?)
@@ -89,6 +94,9 @@ fn nord_theme() -> Option<Theme> {
         background: Style::default()
             .bg(Color::from_str("#2E3440").ok()?)
             .fg(Color::from_str("#D8DEE9").ok()?),
+        dim: Style::default()
+            .bg(Color::from_str("#2E3440").ok()?)
+            .fg(Color::from_str("#81A1C1").ok()?),
         foreground: Style::default().fg(Color::from_str("#D8DEE9").ok()?),
         header: Style::default()
             .bg(Color::from_str("#3B4252").ok()?)
@@ -115,6 +123,9 @@ fn one_dark_theme() -> Option<Theme> {
         background: Style::default()
             .bg(Color::from_str("#282C34").ok()?)
             .fg(Color::from_str("#ABB2BF").ok()?),
+        dim: Style::default()
+            .bg(Color::from_str("#282C34").ok()?)
+            .fg(Color::from_str("#4B5363").ok()?),
         foreground: Style::default().fg(Color::from_str("#ABB2BF").ok()?),
         header: Style::default()
             .bg(Color::from_str("#2C323C").ok()?)
@@ -140,14 +151,17 @@ fn solarized_dark_theme() -> Option<Theme> {
     Some(Theme {
         background: Style::default()
             .bg(Color::from_str("#002B36").ok()?)
-            .fg(Color::from_str("#839496").ok()?),
-        foreground: Style::default().fg(Color::from_str("#839496").ok()?),
+            .fg(Color::from_str("#93A1A1").ok()?),
+        dim: Style::default()
+            .bg(Color::from_str("#002B36").ok()?)
+            .fg(Color::from_str("#586E75").ok()?),
+        foreground: Style::default().fg(Color::from_str("#93A1A1").ok()?),
         header: Style::default()
             .bg(Color::from_str("#073642").ok()?)
             .fg(Color::from_str("#93A1A1").ok()?),
         footer: Style::default()
             .bg(Color::from_str("#002B36").ok()?)
-            .fg(Color::from_str("#586E75").ok()?),
+            .fg(Color::from_str("#93A1A1").ok()?),
         selected: Style::default()
             .bg(Color::from_str("#073642").ok()?)
             .fg(Color::from_str("#B58900").ok()?),
@@ -157,6 +171,6 @@ fn solarized_dark_theme() -> Option<Theme> {
         index: Style::default().fg(Color::from_str("#93A1A1").ok()?),
         input: Style::default().fg(Color::from_str("#859900").ok()?),
         input_empty: Style::default().fg(Color::from_str("#DC322F").ok()?),
-        scrollbar: Style::default().fg(Color::from_str("#586E75").ok()?),
+        scrollbar: Style::default().fg(Color::from_str("#93A1A1").ok()?),
     })
 }

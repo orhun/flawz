@@ -60,7 +60,11 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
         })
         .collect::<Vec<Row>>();
     let block = Block::bordered()
-        .style(app.theme.background)
+        .style(if app.show_details {
+            app.theme.dim
+        } else {
+            app.theme.background
+        })
         .border_style(app.theme.borders)
         .border_type(BorderType::Double)
         .title_bottom(
