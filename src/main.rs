@@ -1,16 +1,16 @@
 use clap::Parser;
+use flawz::app::{App, AppResult};
+use flawz::args::Args;
+use flawz::cve::Cve;
+use flawz::error::Error;
+use flawz::event::{Event, EventHandler};
+use flawz::handler::handle_key_events;
+use flawz::tui::Tui;
+use flawz::widgets::SelectableList;
 use ratatui::backend::CrosstermBackend;
 use ratatui::Terminal;
 use std::path::Path;
 use std::{io, thread};
-use tui_jan::app::{App, AppResult};
-use tui_jan::args::Args;
-use tui_jan::cve::Cve;
-use tui_jan::error::Error;
-use tui_jan::event::{Event, EventHandler};
-use tui_jan::handler::handle_key_events;
-use tui_jan::tui::Tui;
-use tui_jan::widgets::SelectableList;
 
 use nvd_cve::cache::{get_all, sync_blocking, CacheConfig};
 use nvd_cve::client::{BlockingHttpClient, ReqwestBlockingClient};

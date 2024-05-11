@@ -1,5 +1,5 @@
 [package]
-name = "tui-jan"
+name = "flawz"
 version = "0.1.0"
 description = "A Terminal UI for browsing CVEs"
 authors = ["Orhun Parmaksız <orhunparmaksiz@gmail.com>"]

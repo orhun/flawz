@@ -486,6 +486,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "flawz"
+version = "0.1.0"
+dependencies = [
+ "clap 4.5.4",
+ "crossterm",
+ "nvd_cve",
+ "ratatui",
+ "textwrap 0.16.1",
+ "thiserror",
+ "tui-input",
+ "tui-popup",
+]
+
+[[package]]
 name = "fnv"
 version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1671,20 +1685,6 @@ checksum = "b3e785f863a3af4c800a2a669d0b64c879b538738e352607e2624d03f868dc01"
 dependencies = [
  "crossterm",
  "unicode-width",
-]
-
-[[package]]
-name = "tui-jan"
-version = "0.1.0"
-dependencies = [
- "clap 4.5.4",
- "crossterm",
- "nvd_cve",
- "ratatui",
- "textwrap 0.16.1",
- "thiserror",
- "tui-input",
- "tui-popup",
 ]
 
 [[package]]
