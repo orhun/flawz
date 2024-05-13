@@ -7,11 +7,11 @@ license = "MIT"
 edition = "2021"
 
 [dependencies]
-nvd_cve = { path = "../nvd_cve/" }
+nvd_cve = "0.2.0"
 ratatui = "0.26.0"
 crossterm = "0.27.0"
-thiserror = "1.0.58"
+thiserror = "1.0.60"
 textwrap = "0.16.1"
 tui-input = "0.8.0"
-tui-popup = "0.2.4"
+tui-popup = "0.3.1"
 clap = { version = "4.5.4", features = ["derive", "env", "wrap_help", "cargo"] }

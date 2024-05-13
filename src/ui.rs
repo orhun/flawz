@@ -10,7 +10,7 @@ use ratatui::{
     Frame,
 };
 use tui_input::Input;
-use tui_popup::Popup;
+use tui_popup::{Popup, SizedWrapper};
 
 /// Maximum number of elements to show in the table.
 const TABLE_PAGE_LIMIT: usize = 50;
@@ -185,6 +185,17 @@ fn render_cursor(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
 /// Render the details popup.
 fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
     if let (true, Some(cve)) = (app.show_details, app.list.selected()) {
+        let mut reference_lines = Vec::new();
+        for reference in &cve.references {
+            let line: Line = vec![
+                "Reference".set_style(app.theme.foreground).bold(),
+                ": ".set_style(app.theme.separator),
+                reference.to_string().set_style(app.theme.foreground),
+            ]
+            .into();
+            reference_lines.push(line);
+        }
+
         let description = cve
             .description
             .clone()
@@ -197,7 +208,17 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
             cve.assigner.to_string().set_style(app.theme.foreground),
         ]
         .into()];
-        let max_row_width = (area.width - 2) / 2;
+        let max_row_width = if reference_lines
+            .iter()
+            .map(|v| v.width())
+            .max()
+            .unwrap_or_default() as u16
+            > area.width - 2
+        {
+            area.width - 4
+        } else {
+            (area.width - 4) / 2
+        };
         if (Line::raw(&description).width() as u16) < max_row_width {
             lines.push(
                 vec![
@@ -222,29 +243,28 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
                     .collect::<Vec<Line>>(),
             );
         }
-        for reference in &cve.references {
-            let reference_line = vec![
-                "Reference".set_style(app.theme.foreground).bold(),
-                ": ".set_style(app.theme.separator),
-                reference.to_string().set_style(app.theme.foreground),
-            ]
-            .into();
-            lines.push(reference_line);
-        }
+        lines.extend(reference_lines);
         if lines.len() > area.height.saturating_sub(2) as usize {
             lines = lines.into_iter().skip(app.scroll_index).collect();
         }
+        let height = lines.len();
+        let paragraph = Paragraph::new(lines.clone());
+        let sized_paragraph = SizedWrapper {
+            inner: paragraph,
+            width: lines.iter().map(|v| v.width()).max().unwrap_or_default(),
+            height,
+        };
         let popup = Popup::new(
             vec![
                 "|".set_style(app.theme.separator),
                 cve.id.to_string().set_style(app.theme.highlight).bold(),
                 "|".set_style(app.theme.separator),
             ],
-            lines.clone(),
+            sized_paragraph,
         )
         .style(app.theme.background);
-        frame.render_widget(popup.to_widget(), area);
-        app.scroll_details = lines.len() > area.height.saturating_sub(2) as usize;
+        frame.render_widget(&popup, area);
+        app.scroll_details = height > area.height.saturating_sub(2) as usize;
         if app.scroll_details {
             frame.render_stateful_widget(
                 Scrollbar::new(ScrollbarOrientation::VerticalRight)
