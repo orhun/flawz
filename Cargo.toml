@@ -3,7 +3,12 @@ name = "flawz"
 version = "0.1.0"
 description = "A Terminal UI for browsing CVEs"
 authors = ["Orhun Parmaksız <orhunparmaksiz@gmail.com>"]
-license = "MIT"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+homepage = "https://github.com/orhun/flawz"
+repository = "https://github.com/orhun/flawz"
+keywords = ["cve", "nvd", "tui", "flaw", "security", "vulnerability"]
+categories = ["command-line-utilities"]
 edition = "2021"
 
 [dependencies]
