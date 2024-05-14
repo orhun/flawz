@@ -1,0 +1,21 @@
+# configuration for https://github.com/EmbarkStudios/cargo-deny
+
+[licenses]
+confidence-threshold = 0.8
+allow = [
+  "MIT",
+  "Apache-2.0",
+  "Unicode-DFS-2016",
+  "ISC",
+  "BSD-2-Clause",
+  "BSD-3-Clause",
+  "Zlib",
+]
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "warn"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+
+[advisories]
+ignore = ["RUSTSEC-2021-0145", "RUSTSEC-2021-0139"]
