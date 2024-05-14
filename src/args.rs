@@ -10,8 +10,8 @@ use crate::{app::AppResult, error::Error, theme::BuiltinTheme};
     about,
     rename_all_env = "screaming-snake",
     help_template = "\
-{before-help}-=[ {name} {version} ]=-\n
-{about-with-newline}Written by {author-with-newline}
+{before-help}{name} {version} - {about}
+With ♥ by {author-with-newline}
 {usage-heading}
   {usage}
 
