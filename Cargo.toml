@@ -20,3 +20,24 @@ textwrap = "0.16.1"
 tui-input = "0.8.0"
 tui-popup = "0.3.1"
 clap = { version = "4.5.4", features = ["derive", "env", "wrap_help", "cargo"] }
+
+[profile.dev]
+opt-level = 0
+debug = true
+panic = "abort"
+
+[profile.test]
+opt-level = 0
+debug = true
+
+[profile.release]
+opt-level = 3
+debug = false
+panic = "unwind"
+lto = true
+codegen-units = 1
+strip = true
+
+[profile.bench]
+opt-level = 3
+debug = false
