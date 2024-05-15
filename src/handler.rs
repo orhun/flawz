@@ -1,6 +1,6 @@
 use crate::app::{App, AppResult};
 use crate::event::Event as TuiEvent;
-use crossterm::event::{Event, KeyCode, KeyEvent, KeyModifiers};
+use crossterm::event::{Event, KeyCode, KeyEvent, KeyModifiers, MouseEvent, MouseEventKind};
 use std::sync::mpsc::Sender;
 use tui_input::{backend::crossterm::EventHandler, Input};
 
@@ -72,5 +72,33 @@ pub fn handle_key_events(
         _ => {}
     }
     app.show_details = key_event == KeyCode::Enter.into();
+    Ok(())
+}
+
+/// Handles the mouse events and updates the state of [`App`].
+pub fn handle_mouse_events(
+    mouse_event: MouseEvent,
+    app: &mut App,
+    _: &Sender<TuiEvent>,
+) -> AppResult<()> {
+    match mouse_event.kind {
+        MouseEventKind::ScrollDown => {
+            if app.show_details && app.scroll_details {
+                app.scroll_index = app.scroll_index.saturating_add(1);
+            } else {
+                app.list.next();
+                app.show_details = false;
+            }
+        }
+        MouseEventKind::ScrollUp => {
+            if app.show_details && app.scroll_details {
+                app.scroll_index = app.scroll_index.saturating_sub(1);
+            } else {
+                app.list.previous();
+                app.show_details = false;
+            }
+        }
+        _ => {}
+    }
     Ok(())
 }

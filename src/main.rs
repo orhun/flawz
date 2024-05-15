@@ -4,7 +4,7 @@ use flawz::args::Args;
 use flawz::cve::Cve;
 use flawz::error::Error;
 use flawz::event::{Event, EventHandler};
-use flawz::handler::handle_key_events;
+use flawz::handler::{handle_key_events, handle_mouse_events};
 use flawz::terminal::Tui;
 use flawz::widgets::SelectableList;
 use ratatui::backend::CrosstermBackend;
@@ -61,7 +61,9 @@ fn main() -> AppResult<()> {
         match tui.events.next()? {
             Event::Tick => {}
             Event::Key(key_event) => handle_key_events(key_event, &mut app, &tui.events.sender)?,
-            Event::Mouse(_) => {}
+            Event::Mouse(mouse_event) => {
+                handle_mouse_events(mouse_event, &mut app, &tui.events.sender)?
+            }
             Event::Resize(_, _) => {}
             Event::Search => {
                 let query = app.input.value().to_lowercase();
