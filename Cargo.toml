@@ -41,3 +41,37 @@ strip = true
 [profile.bench]
 opt-level = 3
 debug = false
+
+# The profile that 'cargo dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
+
+# Config for 'cargo dist'
+[workspace.metadata.dist]
+# The preferred cargo-dist version to use in CI (Cargo.toml SemVer syntax)
+cargo-dist-version = "0.14.0"
+# CI backends to support
+ci = "github"
+# The installers to generate for each app
+installers = ["shell", "powershell", "msi"]
+# Target platforms to build apps for (Rust target-triple syntax)
+targets = [
+  "aarch64-apple-darwin",
+  "x86_64-apple-darwin",
+  "x86_64-unknown-linux-gnu",
+  "x86_64-unknown-linux-musl",
+  "x86_64-pc-windows-msvc",
+]
+# Publish jobs to run in CI
+pr-run-mode = "upload"
+# Whether to install an updater program
+install-updater = false
+# Skip checking whether the specified configuration files are up to date
+allow-dirty = ["ci", "msi"]
+
+[package.metadata.wix]
+upgrade-guid = "539E614D-3F40-47C9-98FE-56485078BA84"
+path-guid = "27678D15-7FAC-4994-A1E3-F8DED86C94FE"
+license = false
+eula = false
