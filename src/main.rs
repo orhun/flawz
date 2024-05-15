@@ -5,7 +5,7 @@ use flawz::cve::Cve;
 use flawz::error::Error;
 use flawz::event::{Event, EventHandler};
 use flawz::handler::handle_key_events;
-use flawz::tui::Tui;
+use flawz::terminal::Tui;
 use flawz::widgets::SelectableList;
 use ratatui::backend::CrosstermBackend;
 use ratatui::Terminal;
@@ -59,7 +59,7 @@ fn main() -> AppResult<()> {
         tui.draw(&mut app)?;
         // Handle events.
         match tui.events.next()? {
-            Event::Tick => app.tick(),
+            Event::Tick => {}
             Event::Key(key_event) => handle_key_events(key_event, &mut app, &tui.events.sender)?,
             Event::Mouse(_) => {}
             Event::Resize(_, _) => {}
