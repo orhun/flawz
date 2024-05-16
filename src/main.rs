@@ -27,7 +27,7 @@ fn main() -> AppResult<()> {
         show_progress: true,
         force_update: args.force_update,
     };
-    if !args.offline && !Path::new(&config.db).exists() {
+    if !args.offline && !Path::new(&config.db).exists() || args.force_update {
         let client = ReqwestBlockingClient::new(&config.url, None, None, None);
         sync_blocking(&config, client).map_err(Error::CacheError)?;
     }
