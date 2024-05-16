@@ -20,12 +20,7 @@ With ♥ by {author-with-newline}
 )]
 pub struct Args {
     /// A URL where NIST CVE 1.1 feeds can be found.
-    #[arg(
-        short,
-        long,
-        env,
-        default_value = "https://nvd.nist.gov/feeds/json/cve/1.1/"
-    )]
+    #[arg(long, env, default_value = "https://nvd.nist.gov/feeds/json/cve/1.1/")]
     pub url: String,
 
     /// List of feeds that are going to be synced.
@@ -43,18 +38,18 @@ pub struct Args {
     pub db: Option<String>,
 
     /// Always fetch feeds.
-    #[arg(long)]
+    #[arg(short = 'u', long)]
     pub force_update: bool,
 
     /// Do not fetch feeds.
     #[arg(short, long)]
     pub offline: bool,
 
-    /// Start with the search query.
+    /// Start with a search query.
     #[arg(short, env, long)]
     pub query: Option<String>,
 
-    /// Sets the theme.
+    /// Set the theme.
     #[arg(short, long, value_enum, default_value = "dracula")]
     pub theme: BuiltinTheme,
 }
