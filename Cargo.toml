@@ -71,8 +71,6 @@ installers = ["shell", "powershell", "msi"]
 targets = [
   "aarch64-apple-darwin",
   "x86_64-apple-darwin",
-  "x86_64-unknown-linux-gnu",
-  "x86_64-unknown-linux-musl",
   "x86_64-pc-windows-msvc",
 ]
 # Publish jobs to run in CI
