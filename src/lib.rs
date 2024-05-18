@@ -5,7 +5,7 @@
 /// Application.
 pub mod app;
 
-/// Event handler.
+/// Terminal event.
 pub mod event;
 
 /// TUI renderer.
