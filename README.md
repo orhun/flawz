@@ -35,6 +35,7 @@ flawz --feeds 2024 --query xz
   - [Cargo](#cargo)
   - [Arch Linux](#arch-linux)
   - [Alpine Linux](#alpine-linux)
+  - [NetBSD](#netbsd)
   - [Binary releases](#binary-releases)
   - [Build from source](#build-from-source)
 - [Usage](#usage)
@@ -86,6 +87,13 @@ pacman -S flawz
 
 ```sh
 apk add flawz
+```
+
+### NetBSD
+**flawz** is available from the official repositories. To install it, simply run:
+
+```sh
+pkgin install flawz
 ```
 
 ### Binary releases
