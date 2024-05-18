@@ -90,7 +90,8 @@ apk add flawz
 ```
 
 ### NetBSD
-**flawz** is available from the official repositories. To install it, simply run:
+
+**flawz** is available from the [official repositories](https://pkgsrc.se/security/flawz). To install it, simply run:
 
 ```sh
 pkgin install flawz
