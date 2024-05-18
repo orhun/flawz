@@ -6,7 +6,6 @@
 
 <a href="https://github.com/orhun/flawz/releases"><img src="https://img.shields.io/github/v/release/orhun/flawz?style=flat&amp;labelColor=171717&amp;color=47304d&amp;logo=GitHub&amp;logoColor=white" alt="GitHub Release"></a>
 <a href="https://crates.io/crates/flawz/"><img src="https://img.shields.io/crates/v/flawz?style=flat&amp;labelColor=171717&amp;color=47304d&amp;logo=Rust&amp;logoColor=white" alt="Crate Release"></a>
-<a href="https://codecov.io/gh/orhun/flawz"><img src="https://img.shields.io/codecov/c/gh/orhun/flawz?style=flat&amp;labelColor=171717&amp;color=47304d&amp;logo=Codecov&amp;logoColor=white" alt="Coverage"></a>
 <a href="https://github.com/orhun/flawz/actions?query=workflow%3A%22Continuous+Integration%22"><img src="https://img.shields.io/github/actions/workflow/status/orhun/flawz/ci.yml?branch=main&amp;style=flat&amp;labelColor=171717&amp;color=47304d&amp;logo=GitHub%20Actions&amp;logoColor=white" alt="Continuous Integration"></a>
 <a href="https://github.com/orhun/flawz/actions?query=workflow%3A%22Release%22"><img src="https://img.shields.io/github/actions/workflow/status/orhun/flawz/release.yml?style=flat&amp;labelColor=171717&amp;color=47304d&amp;logo=GitHub%20Actions&amp;logoColor=white&amp;label=release" alt="Continuous Deployment"></a>
 <a href="https://docs.rs/flawz/"><img src="https://img.shields.io/docsrs/flawz?style=flat&amp;labelColor=171717&amp;color=47304d&amp;logo=Rust&amp;logoColor=white" alt="Documentation"></a>
