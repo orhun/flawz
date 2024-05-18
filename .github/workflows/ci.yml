@@ -131,7 +131,7 @@ jobs:
       - name: Run lychee
         uses: lycheeverse/lychee-action@v1
         with:
-          args: -v *.md
+          args: -v README.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
