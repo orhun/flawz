@@ -11,6 +11,15 @@ keywords = ["cve", "nvd", "tui", "flaw", "security", "vulnerability"]
 categories = ["command-line-utilities"]
 edition = "2021"
 rust-version = "1.74.1"
+default-run = "flawz"
+
+[[bin]]
+name = "flawz-completions"
+path = "src/bin/completions.rs"
+
+[[bin]]
+name = "flawz-mangen"
+path = "src/bin/mangen.rs"
 
 [dependencies]
 nvd_cve = "0.2.0"
@@ -21,6 +30,8 @@ textwrap = "0.16.1"
 tui-input = "0.8.0"
 tui-popup = "0.3.1"
 clap = { version = "4.5.4", features = ["derive", "env", "wrap_help", "cargo"] }
+clap_complete = "4.5.2"
+clap_mangen = "0.2.20"
 
 [profile.dev]
 opt-level = 0
