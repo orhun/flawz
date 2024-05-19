@@ -35,6 +35,7 @@ flawz --feeds 2024 --query xz
   - [Cargo](#cargo)
   - [Arch Linux](#arch-linux)
   - [Alpine Linux](#alpine-linux)
+  - [Homebrew](#homebrew)
   - [NetBSD](#netbsd)
   - [Binary releases](#binary-releases)
   - [Build from source](#build-from-source)
@@ -87,6 +88,14 @@ pacman -S flawz
 
 ```sh
 apk add flawz
+```
+
+### Homebrew
+
+**flawz** is available for macOS via [Homebrew](https://github.com/Homebrew/homebrew-core/blob/master/Formula/f/flawz.rb). It can be installed using [`brew`](https://brew.sh/)
+
+```sh
+brew install flawz
 ```
 
 ### NetBSD
