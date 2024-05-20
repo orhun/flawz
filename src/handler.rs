@@ -38,6 +38,22 @@ pub fn handle_key_events(
                 app.quit();
             }
         }
+        KeyCode::Char(' ') => {
+            if app.show_details {
+                let references = &app.list.selected().unwrap().references;
+                // Iterates over the references and find the first http reference, if any
+                if let Some(first_http_reference) =
+                    references.iter().find(|r| r.starts_with("http"))
+                {
+                    match webbrowser::open(first_http_reference) {
+                        Ok(_) => {} // Opened the browser successfully, nothing to do
+                        Err(err) => {
+                            println!("Failed to open browser: {err:?}");
+                        }
+                    }
+                }
+            }
+        }
         KeyCode::Down | KeyCode::Char('j') => {
             if app.show_details && app.scroll_details {
                 app.scroll_index = app.scroll_index.saturating_add(1);
