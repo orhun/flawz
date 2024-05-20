@@ -59,7 +59,6 @@ fn main() -> AppResult<()> {
         tui.draw(&mut app)?;
         // Handle events.
         match tui.events.next()? {
-            Event::Tick => {}
             Event::Key(key_event) => handle_key_events(key_event, &mut app, &tui.events.sender)?,
             Event::Mouse(mouse_event) => {
                 handle_mouse_events(mouse_event, &mut app, &tui.events.sender)?
