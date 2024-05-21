@@ -50,6 +50,7 @@ pub fn handle_key_events(
                         eprintln!("Failed to open browser: {e:?}");
                     }
                 }
+            }
         }
         KeyCode::Down | KeyCode::Char('j') => {
             if app.show_details && app.scroll_details {
