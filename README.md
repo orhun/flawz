@@ -152,14 +152,14 @@ flawz [OPTIONS]
 
 ## Key bindings
 
-Key          |Action         |Description
--------------|---------------|-----------
-`q`          |Quit           |Exit the program
-`k` / `Up`   |Scroll Up      |Scroll up the list
-`j` / `Down` |Scroll Down    |Scroll down the list
-`Enter`      |Select         |View the selected CVE details
-`/`          |Search         |Start a search
-`Space`      |Open In Browser|Open the first CVE reference in the browser
+| Key          | Action      | Description                                 |
+| ------------ | ----------- | ------------------------------------------- |
+| `k` / `Up`   | Scroll Up   | Scroll up the list                          |
+| `j` / `Down` | Scroll Down | Scroll down the list                        |
+| `Enter`      | Select      | View the selected CVE details               |
+| `/`          | Search      | Search for a CVE                            |
+| `Space`      | Open        | Open the first CVE reference in the browser |
+| `q`          | Quit        | Set computer on fire                        |
 
 ## Examples
 
