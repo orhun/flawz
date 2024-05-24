@@ -40,6 +40,7 @@ flawz --feeds 2024 --query xz
   - [Binary releases](#binary-releases)
   - [Build from source](#build-from-source)
 - [Usage](#usage)
+- [Key bindings](#key-bindings)
 - [Examples](#examples)
 - [Themes](#themes)
   - [Dracula (default)](#dracula-default)
@@ -148,6 +149,17 @@ flawz [OPTIONS]
 -h, --help                Print help (see more with '--help')
 -V, --version             Print version
 ```
+
+## Key bindings
+
+Key          |Action         |Description
+-------------|---------------|-----------
+`q`          |Quit           |Exit the program
+`k` / `Up`   |Scroll Up      |Scroll up the list
+`j` / `Down` |Scroll Down    |Scroll down the list
+`Enter`      |Select         |View the selected CVE details
+`/`          |Search         |Start a search
+`Space`      |Open In Browser|Open the first CVE reference in the browser
 
 ## Examples
 
