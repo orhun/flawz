@@ -38,6 +38,20 @@ pub fn handle_key_events(
                 app.quit();
             }
         }
+        KeyCode::Char(' ') => {
+            if app.show_details {
+                if let Some(reference) = app
+                    .list
+                    .selected()
+                    .map(|v| &v.references)
+                    .and_then(|references| references.iter().find(|r| r.starts_with("http")))
+                {
+                    if let Err(e) = webbrowser::open(reference) {
+                        eprintln!("Failed to open browser: {e:?}");
+                    }
+                }
+            }
+        }
         KeyCode::Down | KeyCode::Char('j') => {
             if app.show_details && app.scroll_details {
                 app.scroll_index = app.scroll_index.saturating_add(1);

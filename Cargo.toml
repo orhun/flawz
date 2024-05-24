@@ -32,6 +32,7 @@ tui-popup = "0.3.2"
 clap = { version = "4.5.4", features = ["derive", "env", "wrap_help", "cargo"] }
 clap_complete = "4.5.2"
 clap_mangen = "0.2.20"
+webbrowser = "1.0.1"
 
 [profile.dev]
 opt-level = 0
