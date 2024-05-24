@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0](https://github.com/orhun/flawz/compare/0.1.1..0.2.0) - 2024-05-24
+
+### 🚀 Features
+
+- Support opening the first HTTP reference in browser ([#11](https://github.com/orhun/flawz/pull/11)) ([#15](https://github.com/orhun/flawz/pull/15)) - ([e970ebc](https://github.com/orhun/flawz/commit/e970ebc84ddf3016e2507cd74bedd88873972e03))
+
+### 📚 Documentation
+
+- Update key bindings table - ([41dea0c](https://github.com/orhun/flawz/commit/41dea0cc623de18b833d307d618b004074fcb055))
+- Add key bindings ([#20](https://github.com/orhun/flawz/pull/20)) - ([f8bcfa0](https://github.com/orhun/flawz/commit/f8bcfa023e22ac602f41f423075233fff7b3fa58))
+
+### ⚙️ Miscellaneous Tasks
+
+- Update macos runner - ([39d240b](https://github.com/orhun/flawz/commit/39d240b2e5cb0b86fdcbd24c142ba10f0d4a914c))
+
 ## [0.1.1](https://github.com/orhun/flawz/compare/0.1.0-rc.1..0.1.1) - 2024-05-20
 
 ### 🐛 Bug Fixes
@@ -24,4 +39,3 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Update cargo-dist targets - ([d704fd9](https://github.com/orhun/flawz/commit/d704fd9c02297f7073e3d37e0deae6ce35c4dad1))
-
