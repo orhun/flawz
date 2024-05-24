@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.2](https://github.com/orhun/flawz/compare/0.1.1..0.1.2) - 2024-05-24
+## [0.2.0](https://github.com/orhun/flawz/compare/0.1.1..0.2.0) - 2024-05-24
 
 ### 🚀 Features
 
@@ -39,4 +39,3 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Update cargo-dist targets - ([d704fd9](https://github.com/orhun/flawz/commit/d704fd9c02297f7073e3d37e0deae6ce35c4dad1))
-

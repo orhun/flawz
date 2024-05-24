@@ -537,7 +537,7 @@ dependencies = [
 
 [[package]]
 name = "flawz"
-version = "0.1.2"
+version = "0.2.0"
 dependencies = [
  "clap 4.5.4",
  "clap_complete",
