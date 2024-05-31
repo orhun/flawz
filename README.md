@@ -99,6 +99,30 @@ apk add flawz
 brew install flawz
 ```
 
+### Nixpkgs
+
+**flawz** is available for Nix via [nixpkgs-unstable](https://github.com/NixOS/nixpkgs/blob/nixpkgs-unstable/pkgs/by-name/fl/flawz/package.nix) channel. To make it available in the environment, simply run:
+
+```sh
+nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+nix-channel --update nixpkgs
+nix-env -iA nixpkgs.flawz
+```
+
+On [NixOS](https://nixos.org/nixos/):
+
+```sh
+nix-channel --add https://nixos.org/channels/nixos-unstable
+nix-channel --update nixos
+nix-env -iA nixos.flawz
+```
+
+Alternatively, if you're using the new experimental CLI, you can use the following:
+
+```sh
+nix run nixpkgs#flawz
+```
+
 ### NetBSD
 
 **flawz** is available from the [official repositories](https://pkgsrc.se/security/flawz). To install it, simply run:
