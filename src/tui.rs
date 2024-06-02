@@ -115,7 +115,7 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
             Line::default()
         });
     frame.render_stateful_widget(
-        Table::new(items, &[Constraint::Min(13), Constraint::Percentage(100)])
+        Table::new(items, &[Constraint::Min(14), Constraint::Percentage(100)])
             .header(Row::new(vec![
                 "Name".set_style(app.theme.highlight).bold(),
                 "Description".set_style(app.theme.highlight).bold(),
