@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1](https://github.com/orhun/flawz/compare/0.2.0..0.2.1) - 2024-06-02
+
+### 🐛 Bug Fixes
+
+- Fix the constraint for showing CVE ids ([#24](https://github.com/orhun/flawz/pull/24)) ([#26](https://github.com/orhun/flawz/pull/26)) - ([88be940](https://github.com/orhun/flawz/commit/88be940db99e50a1d27fd6595209724921666ce9))
+
+### 📚 Documentation
+
+- *(readme)* Add nix instructions ([#22](https://github.com/orhun/flawz/pull/22)) - ([bfcdf1f](https://github.com/orhun/flawz/commit/bfcdf1f56c4358f805af8d63a94e3435087b2299))
+
 ## [0.2.0](https://github.com/orhun/flawz/compare/0.1.1..0.2.0) - 2024-05-24
 
 ### 🚀 Features
