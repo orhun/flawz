@@ -14,6 +14,8 @@ pub enum BuiltinTheme {
     OneDark,
     /// Solarized Dark.
     SolarizedDark,
+    /// Gruvbox Light
+    GruvboxLight,
 }
 
 impl BuiltinTheme {
@@ -24,6 +26,7 @@ impl BuiltinTheme {
             BuiltinTheme::Nord => nord_theme(),
             BuiltinTheme::OneDark => one_dark_theme(),
             BuiltinTheme::SolarizedDark => solarized_dark_theme(),
+            BuiltinTheme::GruvboxLight => gruvbox_light_theme(),  
         }
     }
 }
@@ -172,5 +175,41 @@ fn solarized_dark_theme() -> Option<Theme> {
         input: Style::default().fg(Color::from_str("#859900").ok()?),
         input_empty: Style::default().fg(Color::from_str("#DC322F").ok()?),
         scrollbar: Style::default().fg(Color::from_str("#93A1A1").ok()?),
+    })
+}
+
+fn gruvbox_light_theme() -> Option<Theme> {
+    Some(Theme {
+        // bg: #FBF1C7
+        // fg: #3C3836
+        // secondary_fg: #076678
+        // secondary_bg #A89984
+        // selected_fg: #076678
+        // seperator_fg: #504945
+        // input_fg: #D65D0E
+        // input_empty_fg: #9D0006
+        background: Style::default()
+            .bg(Color::from_str("#FBF1C7").ok()?)
+            .fg(Color::from_str("#3C3836").ok()?),
+        dim: Style::default()
+            .bg(Color::from_str("#FBF1C7").ok()?)
+            .fg(Color::from_str("#076678").ok()?),
+        foreground: Style::default().fg(Color::from_str("#3C3836").ok()?),
+        header: Style::default()
+            .bg(Color::from_str("#A89984").ok()?)
+            .fg(Color::from_str("#3C3836").ok()?),
+        footer: Style::default()
+            .bg(Color::from_str("#FBF1C7").ok()?)
+            .fg(Color::from_str("#3C3836").ok()?),
+        selected: Style::default()
+            .bg(Color::from_str("#A89984").ok()?)
+            .fg(Color::from_str("#076678").ok()?),
+        borders: Style::default().fg(Color::from_str("#076678").ok()?),
+        separator: Style::default().fg(Color::from_str("#076678").ok()?),
+        highlight: Style::default().fg(Color::from_str("#076678").ok()?),
+        index: Style::default().fg(Color::from_str("#076678").ok()?),
+        input: Style::default().fg(Color::from_str("#928374").ok()?),
+        input_empty: Style::default().fg(Color::from_str("#9D0006").ok()?),
+        scrollbar: Style::default().fg(Color::from_str("#282828").ok()?),
     })
 }
