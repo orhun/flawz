@@ -180,14 +180,6 @@ fn solarized_dark_theme() -> Option<Theme> {
 
 fn gruvbox_light_theme() -> Option<Theme> {
     Some(Theme {
-        // bg: #FBF1C7
-        // fg: #3C3836
-        // secondary_fg: #076678
-        // secondary_bg #A89984
-        // selected_fg: #076678
-        // seperator_fg: #504945
-        // input_fg: #D65D0E
-        // input_empty_fg: #9D0006
         background: Style::default()
             .bg(Color::from_str("#FBF1C7").ok()?)
             .fg(Color::from_str("#3C3836").ok()?),
