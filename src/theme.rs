@@ -178,6 +178,7 @@ fn solarized_dark_theme() -> Option<Theme> {
     })
 }
 
+/// <https://github.com/gruvbox-community/gruvbox-contrib>
 fn gruvbox_light_theme() -> Option<Theme> {
     Some(Theme {
         background: Style::default()
