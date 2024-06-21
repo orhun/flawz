@@ -26,7 +26,7 @@ impl BuiltinTheme {
             BuiltinTheme::Nord => nord_theme(),
             BuiltinTheme::OneDark => one_dark_theme(),
             BuiltinTheme::SolarizedDark => solarized_dark_theme(),
-            BuiltinTheme::GruvboxLight => gruvbox_light_theme(),  
+            BuiltinTheme::GruvboxLight => gruvbox_light_theme(),
         }
     }
 }
