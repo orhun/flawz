@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.2](https://github.com/orhun/flawz/compare/0.2.1..0.2.2) - 2024-06-22
+
+### 🚀 Features
+
+- *(theme)* Add 'gruvbox-light' theme ([#32](https://github.com/orhun/flawz/pull/32)) - ([af78e04](https://github.com/orhun/flawz/commit/af78e04992867b6cec4f8dca4a89fd068911b19f))
+
 ## [0.2.1](https://github.com/orhun/flawz/compare/0.2.0..0.2.1) - 2024-06-02
 
 ### 🐛 Bug Fixes
