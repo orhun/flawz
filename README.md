@@ -232,7 +232,7 @@ Start `flawz` with `--theme` option to set a custom theme, e.g. `--theme nord`.
 
 ### Gruvbox Light
 
-![gruvbox light](assets/theme-gruvbox-light.png)
+![gruvbox light](assets/theme-gruvbox-light.jpg)
 
 ## Support
 
