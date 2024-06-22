@@ -195,8 +195,8 @@ fn gruvbox_light_theme() -> Option<Theme> {
             .bg(Color::from_str("#FBF1C7").ok()?)
             .fg(Color::from_str("#3C3836").ok()?),
         selected: Style::default()
-            .bg(Color::from_str("#A89984").ok()?)
-            .fg(Color::from_str("#076678").ok()?),
+            .bg(Color::from_str("#EBDBB2").ok()?)
+            .fg(Color::from_str("#9D0006").ok()?),
         borders: Style::default().fg(Color::from_str("#076678").ok()?),
         separator: Style::default().fg(Color::from_str("#076678").ok()?),
         highlight: Style::default().fg(Color::from_str("#076678").ok()?),
