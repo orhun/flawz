@@ -47,6 +47,7 @@ flawz --feeds 2024 --query xz
   - [Nord](#nord)
   - [One Dark](#one-dark)
   - [Solarized Dark](#solarized-dark)
+  - [Gruvbox Light](#gruvbox-light)
 - [Support](#support)
 - [Contributing](#contributing)
 - [License](#license)
@@ -168,8 +169,7 @@ flawz [OPTIONS]
 -u, --force-update        Always fetch feeds
 -o, --offline             Do not fetch feeds
 -q, --query <QUERY>       Start with a search query [env: QUERY=]
--t, --theme <THEME>       Set the theme [default: dracula] [possible values: dracula, nord, one-dark,
-                        solarized-dark]
+-t, --theme <THEME>       Set the theme [default: dracula] [possible values: dracula, nord, one-dark, solarized-dark, gruvbox-light]
 -h, --help                Print help (see more with '--help')
 -V, --version             Print version
 ```
@@ -229,6 +229,10 @@ Start `flawz` with `--theme` option to set a custom theme, e.g. `--theme nord`.
 ### Solarized Dark
 
 ![solarized dark](assets/theme-solarized-dark.jpg)
+
+### Gruvbox Light
+
+![gruvbox light](assets/theme-gruvbox-light.png)
 
 ## Support
 
