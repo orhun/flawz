@@ -23,7 +23,7 @@ path = "src/bin/mangen.rs"
 
 [dependencies]
 nvd_cve = "0.2.0"
-ratatui = "0.26.3"
+ratatui = "0.27.0"
 crossterm = "0.27.0"
 thiserror = "1.0.60"
 textwrap = "0.16.1"
