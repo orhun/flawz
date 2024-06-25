@@ -1,6 +1,8 @@
 use crate::app::{App, AppResult};
 use crate::event::Event as TuiEvent;
-use crossterm::event::{Event, KeyCode, KeyEvent, KeyModifiers, MouseEvent, MouseEventKind};
+use ratatui::crossterm::event::{
+    Event, KeyCode, KeyEvent, KeyModifiers, MouseEvent, MouseEventKind,
+};
 use std::sync::mpsc::Sender;
 use tui_input::{backend::crossterm::EventHandler, Input};
 
