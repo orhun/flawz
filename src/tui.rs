@@ -130,7 +130,7 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
             .style(app.theme.scrollbar)
             .begin_symbol(Some("↑"))
             .end_symbol(Some("↓")),
-        area.inner(&Margin {
+        area.inner(Margin {
             vertical: 1,
             horizontal: 0,
         }),
@@ -269,7 +269,7 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
                     .style(app.theme.scrollbar)
                     .begin_symbol(Some("↑"))
                     .end_symbol(Some("↓")),
-                area.inner(&Margin {
+                area.inner(Margin {
                     vertical: 1,
                     horizontal: (area.width.saturating_sub(
                         lines.iter().map(|v| v.width()).max().unwrap_or_default() as u16,

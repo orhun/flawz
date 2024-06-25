@@ -542,7 +542,6 @@ dependencies = [
  "clap 4.5.7",
  "clap_complete",
  "clap_mangen",
- "crossterm",
  "nvd_cve",
  "ratatui 0.27.0",
  "textwrap 0.16.1",
