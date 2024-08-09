@@ -71,10 +71,17 @@ flawz --feeds 2024 --query xz
 **flawz** can be installed from [crates.io](https://crates.io/crates/flawz) using [`cargo`](https://doc.rust-lang.org/cargo/) if [Rust](https://www.rust-lang.org/tools/install) is installed.
 
 ```sh
-cargo install flawz
+cargo install --locked flawz
 ```
 
 The minimum supported Rust version (MSRV) is `1.74.1`.
+
+> [!NOTE]
+> You need to have SQLite 3 development files installed. On Debian and its derivates you can do so with the following command:
+>
+> ```sh
+> sudo apt install libsqlite3-dev
+> ```
 
 ### Arch Linux
 
