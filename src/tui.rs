@@ -39,26 +39,28 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
     let page = selected_index / TABLE_PAGE_LIMIT;
     let mut table_state = TableState::default();
     table_state.select(Some(selected_index % TABLE_PAGE_LIMIT));
-    let items = app
+    let mut items = Vec::new();
+    for cve in app
         .list
         .items
         .iter()
         .skip(page * TABLE_PAGE_LIMIT)
         .take(TABLE_PAGE_LIMIT)
-        .map(|cve| {
-            let description = match &cve.description {
+    {
+        let description = highlight_search_result(
+            match &cve.description {
                 Some(v) => textwrap::wrap(
                     v,
                     textwrap::Options::new(area.width.saturating_sub(15) as usize),
                 )
                 .join("\n"),
                 None => "No description available.".into(),
-            };
-            Row::new(vec![cve.id.to_string(), description])
-                .height(2)
-                .top_margin(1)
-        })
-        .collect::<Vec<Row>>();
+            },
+            app,
+        );
+        let cve_id = highlight_search_result(cve.id.to_string(), app);
+        items.push(Row::new(vec![cve_id, description]).height(2).top_margin(1))
+    }
     let block = Block::bordered()
         .style(if app.show_details {
             app.theme.dim
@@ -136,6 +138,19 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
         }),
         &mut ScrollbarState::new(items_len).position(selected_index),
     );
+}
+
+fn highlight_search_result(value: String, app: &App) -> Line {
+    if value.contains(app.input.value()) {
+        let splits = value.split(app.input.value());
+        let chunks = splits.into_iter().map(|c| Span::from(c.to_owned()));
+        let pattern = Span::styled(app.input.value(), app.theme.selected);
+        itertools::intersperse(chunks, pattern)
+            .collect::<Vec<Span>>()
+            .into()
+    } else {
+        Line::from(value)
+    }
 }
 
 fn render_header(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
@@ -245,6 +260,10 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
         if lines.len() > area.height.saturating_sub(2) as usize {
             lines = lines.into_iter().skip(app.scroll_index).collect();
         }
+        for line in lines.iter_mut() {
+            *line = highlight_search_result(line.to_string(), app);
+        }
+        let max_line_width = lines.iter().map(|v| v.width()).max().unwrap_or_default() as u16;
         let height = lines.len();
         let paragraph = Paragraph::new(lines.clone());
         let sized_paragraph = SizedWrapper {
@@ -271,11 +290,9 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
                     .end_symbol(Some("↓")),
                 area.inner(&Margin {
                     vertical: 1,
-                    horizontal: (area.width.saturating_sub(
-                        lines.iter().map(|v| v.width()).max().unwrap_or_default() as u16,
-                    ) / 2),
+                    horizontal: (area.width.saturating_sub(max_line_width) / 2),
                 }),
-                &mut ScrollbarState::new(lines.len().saturating_sub(area.height as usize) + 2)
+                &mut ScrollbarState::new(height.saturating_sub(area.height as usize) + 2)
                     .position(app.scroll_index),
             );
         }
