@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.3](https://github.com/orhun/flawz/compare/0.2.2..0.2.3) - 2024-09-17
+
+### 📚 Documentation
+
+- *(readme)* Details about SQLite dep and avoiding crates mismatch v… ([#59](https://github.com/orhun/flawz/pull/59)) - ([2d727cd](https://github.com/orhun/flawz/commit/2d727cd29c7c05e0ff22e6c6885e5ab170dfae17))
+
 ## [0.2.2](https://github.com/orhun/flawz/compare/0.2.1..0.2.2) - 2024-06-22
 
 ### 🚀 Features
