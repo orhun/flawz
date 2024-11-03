@@ -11,8 +11,7 @@ pub fn handle_key_events(
     sender: &Sender<TuiEvent>,
 ) -> AppResult<()> {
     if app.input_mode {
-        if key_event.code == KeyCode::Char('q')
-            || key_event.code == KeyCode::Esc
+        if key_event.code == KeyCode::Esc
             || (key_event.code == KeyCode::Backspace && app.input.value().is_empty())
         {
             app.input = Input::default();
