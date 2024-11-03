@@ -1,6 +1,6 @@
 [package]
 name = "flawz"
-version = "0.2.2"
+version = "0.3.0"
 description = "A Terminal UI for browsing CVEs"
 authors = ["Orhun Parmaksız <orhunparmaksiz@gmail.com>"]
 license = "MIT OR Apache-2.0"
