@@ -26,7 +26,7 @@ const KEY_BINDINGS: &[(&[&str], &str)] = &[
 /// Renders the user interface widgets.
 pub fn render(app: &mut App, frame: &mut Frame) {
     let rects =
-        Layout::vertical([Constraint::Min(1), Constraint::Percentage(100)]).split(frame.size());
+        Layout::vertical([Constraint::Min(1), Constraint::Percentage(100)]).split(frame.area());
     render_header(app, frame, rects[0]);
     render_list(app, frame, rects[1]);
     render_cursor(app, frame, rects[1]);
@@ -123,7 +123,7 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
                 "Description".set_style(app.theme.highlight).bold(),
             ]))
             .block(block)
-            .highlight_style(app.theme.selected.bold()),
+            .row_highlight_style(app.theme.selected.bold()),
         area,
         &mut table_state,
     );
@@ -132,7 +132,7 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
             .style(app.theme.scrollbar)
             .begin_symbol(Some("↑"))
             .end_symbol(Some("↓")),
-        area.inner(&Margin {
+        area.inner(Margin {
             vertical: 1,
             horizontal: 0,
         }),
@@ -192,7 +192,7 @@ fn render_cursor(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
                 height: 1,
             },
         );
-        frame.set_cursor(x, y);
+        frame.set_cursor_position((x, y));
     }
 }
 
@@ -271,15 +271,13 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
             width: lines.iter().map(|v| v.width()).max().unwrap_or_default(),
             height,
         };
-        let popup = Popup::new(
-            vec![
+        let popup = Popup::new(sized_paragraph)
+            .title(vec![
                 "|".set_style(app.theme.separator),
                 cve.id.to_string().set_style(app.theme.highlight).bold(),
                 "|".set_style(app.theme.separator),
-            ],
-            sized_paragraph,
-        )
-        .style(app.theme.background);
+            ])
+            .style(app.theme.background);
         frame.render_widget(&popup, area);
         app.scroll_details = height > area.height.saturating_sub(2) as usize;
         if app.scroll_details {
@@ -288,7 +286,7 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
                     .style(app.theme.scrollbar)
                     .begin_symbol(Some("↑"))
                     .end_symbol(Some("↓")),
-                area.inner(&Margin {
+                area.inner(Margin {
                     vertical: 1,
                     horizontal: (area.width.saturating_sub(max_line_width) / 2),
                 }),
