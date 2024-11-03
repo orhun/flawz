@@ -31,7 +31,7 @@ tui-input = "0.8.0"
 tui-popup = "0.3.2"
 clap = { version = "4.5.7", features = ["derive", "env", "wrap_help", "cargo"] }
 clap_complete = "4.5.6"
-clap_mangen = "0.2.21"
+clap_mangen = "0.2.24"
 webbrowser = "1.0.2"
 itertools = "0.13.0"
 
