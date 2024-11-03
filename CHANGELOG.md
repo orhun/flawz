@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.2.3](https://github.com/orhun/flawz/compare/0.2.2..0.2.3) - 2024-11-03
+## [0.3.0](https://github.com/orhun/flawz/compare/0.2.2..0.3.0) - 2024-11-03
 
 ### 🚀 Features
 
