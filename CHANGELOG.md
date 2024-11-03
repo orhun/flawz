@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.3](https://github.com/orhun/flawz/compare/0.2.2..0.2.3) - 2024-11-03
+
+### 🚀 Features
+
+- *(tui)* Highlight search results ([#61](https://github.com/orhun/flawz/pull/61)) - ([1dffc0a](https://github.com/orhun/flawz/commit/1dffc0affff1a23c8e7b4c3aef798999d8f66666))
+
+### 🐛 Bug Fixes
+
+- *(search)* Do not close when pressed on 'q' - ([2d1a381](https://github.com/orhun/flawz/commit/2d1a38190cb6059648ac082776580b7241737973))
+
+### 📚 Documentation
+
+- *(readme)* Details about SQLite dep and avoiding crates mismatch v… ([#59](https://github.com/orhun/flawz/pull/59)) - ([2d727cd](https://github.com/orhun/flawz/commit/2d727cd29c7c05e0ff22e6c6885e5ab170dfae17))
+
 ## [0.2.2](https://github.com/orhun/flawz/compare/0.2.1..0.2.2) - 2024-06-22
 
 ### 🚀 Features

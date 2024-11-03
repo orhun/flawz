@@ -560,7 +560,7 @@ dependencies = [
 
 [[package]]
 name = "flawz"
-version = "0.2.2"
+version = "0.2.3"
 dependencies = [
  "clap 4.5.20",
  "clap_complete",
