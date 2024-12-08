@@ -155,10 +155,12 @@ fn highlight_search_result(value: String, app: &App) -> Line {
 
 fn render_header(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
     let title = Paragraph::new(
-        format!(
-            " {} - {} ",
+        concat!(
+            " ",
             env!("CARGO_PKG_NAME"),
-            env!("CARGO_PKG_DESCRIPTION")
+            " - ",
+            env!("CARGO_PKG_DESCRIPTION"),
+            " ",
         )
         .bold(),
     )
@@ -166,7 +168,7 @@ fn render_header(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
     .alignment(Alignment::Left);
     frame.render_widget(title, area);
 
-    let text = format!("v{} with ♥ by @orhun ", env!("CARGO_PKG_VERSION"));
+    let text = concat!("v", env!("CARGO_PKG_VERSION"), " with ♥ by @orhun ");
     let meta = Paragraph::new(text)
         .block(Block::default().style(app.theme.header))
         .alignment(Alignment::Right);
