@@ -24,7 +24,7 @@ path = "src/bin/mangen.rs"
 [dependencies]
 nvd_cve = "0.2.0"
 ratatui = "0.29.0"
-thiserror = "1.0.66"
+thiserror = "2.0.6"
 textwrap = "0.16.1"
 tui-input = "0.11.0"
 tui-popup = "0.6.0"
