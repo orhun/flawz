@@ -49,6 +49,7 @@ flawz --feeds 2024 --query xz
   - [Solarized Dark](#solarized-dark)
   - [Gruvbox Light](#gruvbox-light)
   - [Gruvbox Material Dark Hard](#gruvbox-material-dark-hard)
+  - [Catppuccin](#catppuccin)
 - [Support](#support)
 - [Contributing](#contributing)
 - [License](#license)
@@ -177,7 +178,7 @@ flawz [OPTIONS]
 -u, --force-update        Always fetch feeds
 -o, --offline             Do not fetch feeds
 -q, --query <QUERY>       Start with a search query [env: QUERY=]
--t, --theme <THEME>       Set the theme [default: dracula] [possible values: dracula, nord, one-dark, solarized-dark, gruvbox-light, gruvbox-material-dark-hard]
+-t, --theme <THEME>       Set the theme [default: dracula] [possible values: dracula, nord, one-dark, solarized-dark, gruvbox-light, gruvbox-material-dark-hard, catppuccin]
 -h, --help                Print help (see more with '--help')
 -V, --version             Print version
 ```
@@ -245,6 +246,10 @@ Start `flawz` with `--theme` option to set a custom theme, e.g. `--theme nord`.
 ### Gruvbox Material Dark Hard
 
 ![gruvbox material dark hard](assets/theme-gruvbox-material-dark-hard.jpg)
+
+### catppuccin
+
+![Catppuccin](assets/theme-catppuccin.png)
 
 ## Support
 

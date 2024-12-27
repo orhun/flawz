@@ -18,6 +18,8 @@ pub enum BuiltinTheme {
     GruvboxLight,
     /// Gruvbox Material Dark Hard
     GruvboxMaterialDarkHard,
+    /// Catppuccin
+    Catppuccin,
 }
 
 impl BuiltinTheme {
@@ -30,6 +32,7 @@ impl BuiltinTheme {
             BuiltinTheme::SolarizedDark => solarized_dark_theme(),
             BuiltinTheme::GruvboxLight => gruvbox_light_theme(),
             BuiltinTheme::GruvboxMaterialDarkHard => gruvbox_material_dark_hard_theme(),
+            BuiltinTheme::Catppuccin => catppuccin_theme(),
         }
     }
 }
@@ -236,5 +239,34 @@ fn gruvbox_material_dark_hard_theme() -> Option<Theme> {
         input: Style::default().fg(Color::from_str("#928374").ok()?),
         input_empty: Style::default().fg(Color::from_str("#EA6962").ok()?),
         scrollbar: Style::default().fg(Color::from_str("#EDDEB5").ok()?),
+    })
+}
+
+/// <https://github.com/catppuccin/catppuccin>
+fn catppuccin_theme() -> Option<Theme> {
+    Some(Theme {
+        background: Style::default()
+            .bg(Color::from_str("#1E1E28").ok()?)
+            .fg(Color::from_str("#D9E0EE").ok()?),
+        dim: Style::default()
+            .bg(Color::from_str("#1E1E28").ok()?)
+            .fg(Color::from_str("#6E6C7E").ok()?),
+        foreground: Style::default().fg(Color::from_str("#D9E0EE").ok()?),
+        header: Style::default()
+            .bg(Color::from_str("#302D41").ok()?)
+            .fg(Color::from_str("#F5E0DC").ok()?),
+        footer: Style::default()
+            .bg(Color::from_str("#1E1E28").ok()?)
+            .fg(Color::from_str("#F28FAD").ok()?),
+        selected: Style::default()
+            .bg(Color::from_str("#575268").ok()?)
+            .fg(Color::from_str("#DDB6F2").ok()?),
+        borders: Style::default().fg(Color::from_str("#6E6C7E").ok()?),
+        separator: Style::default().fg(Color::from_str("#C9CBFF").ok()?),
+        highlight: Style::default().fg(Color::from_str("#F5E0DC").ok()?),
+        index: Style::default().fg(Color::from_str("#F28FAD").ok()?),
+        input: Style::default().fg(Color::from_str("#ABE9B3").ok()?),
+        input_empty: Style::default().fg(Color::from_str("#F28FAD").ok()?),
+        scrollbar: Style::default().fg(Color::from_str("#6E6C7E").ok()?),
     })
 }
