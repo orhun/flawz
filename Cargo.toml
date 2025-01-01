@@ -32,7 +32,7 @@ clap = { version = "4.5.20", features = ["derive", "env", "wrap_help", "cargo"] 
 clap_complete = "4.5.36"
 clap_mangen = "0.2.21"
 webbrowser = "1.0.2"
-itertools = "0.13.0"
+itertools = "0.14.0"
 
 [profile.dev]
 opt-level = 0
