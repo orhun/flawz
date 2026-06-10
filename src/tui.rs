@@ -140,7 +140,7 @@ fn render_list(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
     );
 }
 
-fn highlight_search_result(value: String, app: &App) -> Line {
+fn highlight_search_result(value: String, app: &App) -> Line<'_> {
     if value.contains(app.input.value()) {
         let splits = value.split(app.input.value());
         let chunks = splits.into_iter().map(|c| Span::from(c.to_owned()));
