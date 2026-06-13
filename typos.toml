@@ -1,4 +1,5 @@
 # configuration for https://github.com/crate-ci/typos
 
 [default.extend-words]
+CNA = "CNA"
 ratatui = "ratatui"
