@@ -4,7 +4,7 @@ use ratatui::crossterm::event::{
     Event, KeyCode, KeyEvent, KeyModifiers, MouseEvent, MouseEventKind,
 };
 use std::sync::mpsc::Sender;
-use tui_input::{backend::crossterm::EventHandler, Input};
+use tui_input::{Input, backend::crossterm::EventHandler};
 
 /// Handles the key events and updates the state of [`App`].
 pub fn handle_key_events(
@@ -40,17 +40,15 @@ pub fn handle_key_events(
             }
         }
         KeyCode::Char(' ') => {
-            if app.show_details {
-                if let Some(reference) = app
+            if app.show_details
+                && let Some(reference) = app
                     .list
                     .selected()
                     .map(|v| &v.references)
                     .and_then(|references| references.iter().find(|r| r.starts_with("http")))
-                {
-                    if let Err(e) = webbrowser::open(reference) {
-                        eprintln!("Failed to open browser: {e:?}");
-                    }
-                }
+                && let Err(e) = webbrowser::open(reference)
+            {
+                eprintln!("Failed to open browser: {e:?}");
             }
         }
         KeyCode::Down | KeyCode::Char('j') => {

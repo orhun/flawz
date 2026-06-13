@@ -9,7 +9,7 @@ homepage = "https://github.com/orhun/flawz"
 repository = "https://github.com/orhun/flawz"
 keywords = ["cve", "nvd", "tui", "flaw", "security"]
 categories = ["command-line-utilities"]
-edition = "2021"
+edition = "2024"
 rust-version = "1.88.0"
 default-run = "flawz"
 

@@ -1,5 +1,6 @@
 use crate::app::App;
 use ratatui::{
+    Frame,
     layout::{Alignment, Constraint, Layout, Margin, Rect},
     style::{Styled, Stylize},
     text::{Line, Span},
@@ -7,7 +8,6 @@ use ratatui::{
         Block, BorderType, Clear, Paragraph, Row, Scrollbar, ScrollbarOrientation, ScrollbarState,
         Table, TableState,
     },
-    Frame,
 };
 use tui_input::Input;
 use tui_popup::{KnownSizeWrapper, Popup};
@@ -217,12 +217,14 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
             .unwrap_or_default()
             .trim()
             .to_string();
-        let mut lines = vec![vec![
-            "Assigner".set_style(app.theme.foreground).bold(),
-            ": ".set_style(app.theme.separator),
-            cve.assigner.to_string().set_style(app.theme.foreground),
-        ]
-        .into()];
+        let mut lines = vec![
+            vec![
+                "Assigner".set_style(app.theme.foreground).bold(),
+                ": ".set_style(app.theme.separator),
+                cve.assigner.to_string().set_style(app.theme.foreground),
+            ]
+            .into(),
+        ];
         let max_row_width = if reference_lines
             .iter()
             .map(|v| v.width())

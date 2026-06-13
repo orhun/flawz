@@ -36,6 +36,7 @@ flawz --feeds 2024 --query xz
   - [Arch Linux](#arch-linux)
   - [Alpine Linux](#alpine-linux)
   - [Homebrew](#homebrew)
+  - [Nixpkgs](#nixpkgs)
   - [NetBSD](#netbsd)
   - [Binary releases](#binary-releases)
   - [Build from source](#build-from-source)
@@ -49,7 +50,7 @@ flawz --feeds 2024 --query xz
   - [Solarized Dark](#solarized-dark)
   - [Gruvbox Light](#gruvbox-light)
   - [Gruvbox Material Dark Hard](#gruvbox-material-dark-hard)
-  - [Catppuccin](#catppuccin)
+  - [catppuccin](#catppuccin)
 - [Support](#support)
 - [Contributing](#contributing)
 - [License](#license)
@@ -76,7 +77,7 @@ flawz --feeds 2024 --query xz
 cargo install --locked flawz
 ```
 
-The minimum supported Rust version (MSRV) is `1.74.1`.
+The minimum supported Rust version (MSRV) is `1.88.0`.
 
 > [!NOTE]
 > You need to have SQLite 3 development files installed. On Debian and its derivates you can do so with the following command:
@@ -170,17 +171,55 @@ flawz [OPTIONS]
 **Options**:
 
 ```sh
-  --url <URL>           A URL where NIST CVE 1.1 feeds can be found [env: URL=] [default:
-                        https://nvd.nist.gov/feeds/json/cve/1.1/]
--f, --feeds [<FEEDS>...]  List of feeds that are going to be synced [env: FEEDS=] [default: 2002:2024 recent
-                        modified]
--d, --db <DB>             Path to the SQLite database used to store the synced CVE data [env: DB=]
--u, --force-update        Always fetch feeds
--o, --offline             Do not fetch feeds
--q, --query <QUERY>       Start with a search query [env: QUERY=]
--t, --theme <THEME>       Set the theme [default: dracula] [possible values: dracula, nord, one-dark, solarized-dark, gruvbox-light, gruvbox-material-dark-hard, catppuccin]
--h, --help                Print help (see more with '--help')
--V, --version             Print version
+  -f, --feeds [<FEEDS>...]
+          Feeds to sync. Accepts a year (`2026`), a year range (`2002:2026`), `recent` (last 8 days
+          of new publications) or `modified` (last 8 days of modifications). Multiple feeds can be
+          given
+
+          [env: FEEDS=]
+          [default: 2002:2026 recent modified]
+
+  -d, --db <DB>
+          Path to the SQLite database used to store the synced CVE data
+
+          [env: DB=]
+
+  -k, --api-key <API_KEY>
+          NVD API key. With a key the rate limit is 50 requests / 30s (instead of 5 / 30s), making
+          sync roughly 10× faster. Get one at <https://nvd.nist.gov/developers/request-an-api-key>
+
+          [env: NVD_API_KEY=]
+
+  -u, --force-update
+          Re-sync feeds that are already present in the cache
+
+  -o, --offline
+          Do not fetch feeds — read only what is already cached
+
+  -q, --query <QUERY>
+          Start with a search query
+
+          [env: QUERY=]
+
+  -t, --theme <THEME>
+          Set the theme
+
+          Possible values:
+          - dracula:                    Dracula
+          - nord:                       Nord
+          - one-dark:                   One Dark
+          - solarized-dark:             Solarized Dark
+          - gruvbox-light:              Gruvbox Light
+          - gruvbox-material-dark-hard: Gruvbox Material Dark Hard
+          - catppuccin:                 Catppuccin
+
+          [default: dracula]
+
+  -h, --help
+          Print help (see a summary with '-h')
+
+  -V, --version
+          Print version
 ```
 
 ## Key bindings
@@ -272,4 +311,4 @@ Licensed under either of [Apache License Version 2.0](./LICENSE-APACHE) or [The 
 
 ## Copyright
 
-Copyright © 2024, [Orhun Parmaksız](mailto:orhunparmaksiz@gmail.com)
+Copyright © 2024-2026, [Orhun Parmaksız](mailto:orhunparmaksiz@gmail.com)

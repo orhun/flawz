@@ -1,6 +1,6 @@
 # Creating a Release
 
-The releases are automated via [`release-plz`](https://github.com/MarcoIeni/release-plz), [`cargo-dist`](https://github.com/axodotdev/cargo-dist), [`git-cliff`](https://github.com/orhun/git-cliff) and [GitHub Actions](https://docs.github.com/en/actions). See [this blog post](https://blog.orhun.dev/automated-rust-releases/) for more information.
+The releases are automated via [`release-plz`](https://github.com/release-plz/release-plz), [`cargo-dist`](https://github.com/axodotdev/cargo-dist), [`git-cliff`](https://github.com/orhun/git-cliff) and [GitHub Actions](https://docs.github.com/en/actions). See [this blog post](https://blog.orhun.dev/automated-rust-releases/) for more information.
 
 1. `release-plz` creates a pull request for the new releases automatically. So simply merge the [release PR](https://release-plz.ieni.dev/docs/usage/release-pr) for updating the crate versions and changelog.
 

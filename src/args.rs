@@ -19,7 +19,7 @@ With ♥ by {author-with-newline}
 ",
 )]
 pub struct Args {
-    /// Feeds to sync. Accepts a year (`2024`), a year range (`2002:2024`),
+    /// Feeds to sync. Accepts a year (`2026`), a year range (`2002:2026`),
     /// `recent` (last 8 days of new publications) or `modified` (last 8
     /// days of modifications). Multiple feeds can be given.
     #[arg(
@@ -27,7 +27,7 @@ pub struct Args {
         long,
         env,
         num_args(0..),
-        default_values_t = ["2002:2025".to_string(), "recent".into(), "modified".into()]
+        default_values_t = ["2002:2026".to_string(), "recent".into(), "modified".into()]
     )]
     pub feeds: Vec<String>,
 

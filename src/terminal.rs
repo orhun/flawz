@@ -1,8 +1,8 @@
 use crate::app::{App, AppResult};
 use crate::event::EventHandler;
 use crate::tui;
-use ratatui::crossterm::event::{DisableMouseCapture, EnableMouseCapture};
 use ratatui::DefaultTerminal;
+use ratatui::crossterm::event::{DisableMouseCapture, EnableMouseCapture};
 use std::io;
 use std::panic;
 

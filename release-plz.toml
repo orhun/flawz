@@ -1,4 +1,4 @@
-# configuration for https://github.com/MarcoIeni/release-plz
+# configuration for https://github.com/release-plz/release-plz
 
 [workspace]
 allow_dirty = false

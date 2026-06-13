@@ -10,7 +10,7 @@ use flawz::widgets::SelectableList;
 use std::path::Path;
 use std::thread;
 
-use nvd_cve::cache::{get_all, sync_blocking, CacheConfig};
+use nvd_cve::cache::{CacheConfig, get_all, sync_blocking};
 use nvd_cve::client::ReqwestBlockingClient;
 use nvd_cve::feed::Feed;
 
