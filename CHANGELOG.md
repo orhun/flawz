@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.1](https://github.com/orhun/flawz/compare/0.3.0..0.4.1) - 2026-06-13
+
+### ⚙️ Miscellaneous Tasks
+
+- Update outdated references and Rust edition - ([5dfa582](https://github.com/orhun/flawz/commit/5dfa582e737719b259ee050deefc4b3d429dde97))
+- Ignore typo - ([3b24a29](https://github.com/orhun/flawz/commit/3b24a29367dc4dbd7ecb526d51c94732b9e6722e))
+
+
 ## [0.3.0](https://github.com/orhun/flawz/compare/0.2.2..0.3.0) - 2024-11-03
 
 ### 🚀 Features
