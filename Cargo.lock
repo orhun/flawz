@@ -1001,7 +1001,8 @@ dependencies = [
 [[package]]
 name = "nvd_cve"
 version = "0.3.0"
-source = "git+https://github.com/Aionmizu/nvd_cve?branch=nvd-api-2.0#63b174ec0d119ce27ecc614dfd2d799c947e8983"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2380132d6059b12671dfd2824f8ad56b58b0d7838df9bbde48750a340ccfe99c"
 dependencies = [
  "chrono",
  "clap 2.34.0",

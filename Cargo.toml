@@ -22,7 +22,7 @@ name = "flawz-mangen"
 path = "src/bin/mangen.rs"
 
 [dependencies]
-nvd_cve = { version = "0.3.0", git = "https://github.com/Aionmizu/nvd_cve", branch = "nvd-api-2.0" }
+nvd_cve = "0.3.0"
 ratatui = "0.29.0"
 thiserror = "1.0.66"
 textwrap = "0.16.1"
