@@ -20,9 +20,11 @@ pub enum Error {
     /// Error that may occur while parsing colors.
     #[error("Failed to parse color")]
     ParseColorError,
-    /// Error that can occur while parsing the arguments.
-    #[error("Invalid range given. Please use the format <start:end>")]
-    RangeArgsError,
+    /// Error that occurs while parsing a `--feeds` token (e.g. bad range
+    /// or unknown shortcut). The inner message comes from
+    /// `nvd_cve::feed::FeedError`.
+    #[error("Failed to parse --feeds token: {0}")]
+    FeedParseError(String),
 }
 
 #[cfg(test)]

@@ -1,6 +1,6 @@
 use clap::Parser;
 
-use crate::{app::AppResult, error::Error, theme::BuiltinTheme};
+use crate::theme::BuiltinTheme;
 
 /// Command line arguments.
 #[derive(Debug, Default, Parser)]
@@ -19,17 +19,15 @@ With ♥ by {author-with-newline}
 ",
 )]
 pub struct Args {
-    /// A URL where NIST CVE 1.1 feeds can be found.
-    #[arg(long, env, default_value = "https://nvd.nist.gov/feeds/json/cve/1.1/")]
-    pub url: String,
-
-    /// List of feeds that are going to be synced.
+    /// Feeds to sync. Accepts a year (`2024`), a year range (`2002:2024`),
+    /// `recent` (last 8 days of new publications) or `modified` (last 8
+    /// days of modifications). Multiple feeds can be given.
     #[arg(
         short,
         long,
         env,
         num_args(0..),
-        default_values_t = ["2002:2024".to_string(), "recent".into(), "modified".into()]
+        default_values_t = ["2002:2025".to_string(), "recent".into(), "modified".into()]
     )]
     pub feeds: Vec<String>,
 
@@ -37,11 +35,17 @@ pub struct Args {
     #[arg(short, env, long)]
     pub db: Option<String>,
 
-    /// Always fetch feeds.
+    /// NVD API key. With a key the rate limit is 50 requests / 30s
+    /// (instead of 5 / 30s), making sync roughly 10× faster. Get one at
+    /// <https://nvd.nist.gov/developers/request-an-api-key>.
+    #[arg(short = 'k', long, env = "NVD_API_KEY")]
+    pub api_key: Option<String>,
+
+    /// Re-sync feeds that are already present in the cache.
     #[arg(short = 'u', long)]
     pub force_update: bool,
 
-    /// Do not fetch feeds.
+    /// Do not fetch feeds — read only what is already cached.
     #[arg(short, long)]
     pub offline: bool,
 
@@ -52,35 +56,6 @@ pub struct Args {
     /// Set the theme.
     #[arg(short, long, value_enum, default_value = "dracula")]
     pub theme: BuiltinTheme,
-}
-
-impl Args {
-    /// Parses and returns the feeds.
-    pub fn feeds(&self) -> AppResult<Vec<String>> {
-        self.feeds
-            .iter()
-            .try_fold::<Vec<_>, _, AppResult<_>>(vec![], |mut acc, v| {
-                if v.contains(':') {
-                    let mut parts = v.split(':');
-                    let start = parts
-                        .next()
-                        .and_then(|v| v.parse::<usize>().ok())
-                        .ok_or_else(|| Error::RangeArgsError)?;
-                    let end = parts
-                        .next()
-                        .and_then(|v| v.parse::<usize>().ok())
-                        .ok_or_else(|| Error::RangeArgsError)?;
-                    acc.extend(
-                        (start..=end)
-                            .map(|v| v.to_string())
-                            .collect::<Vec<String>>(),
-                    );
-                } else {
-                    acc.push(v.clone())
-                }
-                Ok(acc)
-            })
-    }
 }
 
 #[cfg(test)]

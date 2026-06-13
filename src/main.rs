@@ -13,27 +13,33 @@ use std::path::Path;
 use std::{io, thread};
 
 use nvd_cve::cache::{get_all, sync_blocking, CacheConfig};
-use nvd_cve::client::{BlockingHttpClient, ReqwestBlockingClient};
+use nvd_cve::client::ReqwestBlockingClient;
+use nvd_cve::feed::Feed;
 
 fn main() -> AppResult<()> {
-    // Parse command-line arguments.
     let args = Args::parse();
 
-    // Fetch CVEs.
+    // Expand each CLI token into one or more feeds (years, recent, modified).
+    let mut feeds = Vec::new();
+    for token in &args.feeds {
+        feeds.extend(Feed::parse(token).map_err(|e| Error::FeedParseError(e.to_string()))?);
+    }
+
     let config = CacheConfig {
-        url: args.url.to_string(),
-        feeds: args.feeds()?,
+        feeds,
         db: args.db.unwrap_or_else(CacheConfig::default_db_path),
         show_progress: true,
         force_update: args.force_update,
     };
-    if !args.offline && !Path::new(&config.db).exists() || args.force_update {
-        let client = ReqwestBlockingClient::new(&config.url, None, None, None);
-        sync_blocking(&config, client).map_err(Error::CacheError)?;
+
+    let need_sync = !args.offline && (!Path::new(&config.db).exists() || args.force_update);
+    if need_sync {
+        let client = ReqwestBlockingClient::new(args.api_key.clone())
+            .map_err(|e| Error::CacheError(nvd_cve::cache::CacheError::Http(e)))?;
+        sync_blocking(&config, &client).map_err(Error::CacheError)?;
     }
     let cves = get_all(&config).map_err(Error::CacheError)?;
 
-    // Create an application.
     let mut app = App::new(
         cves.into_iter().map(Cve::from).collect(),
         args.theme
@@ -42,7 +48,6 @@ fn main() -> AppResult<()> {
         args.query.clone().unwrap_or_default(),
     );
 
-    // Initialize the terminal user interface.
     let backend = CrosstermBackend::new(io::stderr());
     let terminal = Terminal::new(backend)?;
     let events = EventHandler::new(250);
@@ -53,11 +58,8 @@ fn main() -> AppResult<()> {
         tui.events.sender.send(Event::Search)?;
     }
 
-    // Start the main loop.
     while app.running {
-        // Render the user interface.
         tui.draw(&mut app)?;
-        // Handle events.
         match tui.events.next()? {
             Event::Key(key_event) => handle_key_events(key_event, &mut app, &tui.events.sender)?,
             Event::Mouse(mouse_event) => {
@@ -93,7 +95,6 @@ fn main() -> AppResult<()> {
         }
     }
 
-    // Exit the user interface.
     tui.exit()?;
     Ok(())
 }
