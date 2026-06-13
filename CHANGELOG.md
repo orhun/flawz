@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2026-06-13
+
+### 🚀 Features
+
+- *(theme)* Add 'gruvbox-material-dark-hard' theme ([#77](https://github.com/orhun/flawz/issues/77)) - ([795f075](https://github.com/orhun/flawz/commit/795f075d9b4506a61226eb9c1cad72928f7894cd))
+- Migrate to NVD 2.0 via nvd_cve 0.3 ([#111](https://github.com/orhun/flawz/issues/111)) - ([59d714a](https://github.com/orhun/flawz/commit/59d714a1c54d65d2135f13c68278be12034e6b3e))
+
+### 🚜 Refactor
+
+- Replace format! with concat! for string literals ([#83](https://github.com/orhun/flawz/issues/83)) - ([46f74ed](https://github.com/orhun/flawz/commit/46f74ede0177dda0f9e15856b97c581381fe90f7))
+
+### ⚙️ Miscellaneous Tasks
+
+- *(theme)* Add `catppuccin` theme ([#90](https://github.com/orhun/flawz/issues/90)) - ([92bd253](https://github.com/orhun/flawz/commit/92bd25343cc7cc554a0b206065e4ba1d297e7b30))
+- Bump dependencies - ([8d62f70](https://github.com/orhun/flawz/commit/8d62f70c5d5a6689920204791d3f9af4079f902a))
+
+
 ## [0.3.0](https://github.com/orhun/flawz/compare/0.2.2..0.3.0) - 2024-11-03
 
 ### 🚀 Features
