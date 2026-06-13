@@ -10,7 +10,7 @@ use ratatui::{
     Frame,
 };
 use tui_input::Input;
-use tui_popup::{Popup, SizedWrapper};
+use tui_popup::{KnownSizeWrapper, Popup};
 
 /// Maximum number of elements to show in the table.
 const TABLE_PAGE_LIMIT: usize = 50;
@@ -268,7 +268,7 @@ fn render_details(app: &mut App, frame: &mut Frame<'_>, area: Rect) {
         let max_line_width = lines.iter().map(|v| v.width()).max().unwrap_or_default() as u16;
         let height = lines.len();
         let paragraph = Paragraph::new(lines.clone());
-        let sized_paragraph = SizedWrapper {
+        let sized_paragraph = KnownSizeWrapper {
             inner: paragraph,
             width: lines.iter().map(|v| v.width()).max().unwrap_or_default(),
             height,

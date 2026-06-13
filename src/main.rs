@@ -7,10 +7,8 @@ use flawz::event::{Event, EventHandler};
 use flawz::handler::{handle_key_events, handle_mouse_events};
 use flawz::terminal::Tui;
 use flawz::widgets::SelectableList;
-use ratatui::backend::CrosstermBackend;
-use ratatui::Terminal;
 use std::path::Path;
-use std::{io, thread};
+use std::thread;
 
 use nvd_cve::cache::{get_all, sync_blocking, CacheConfig};
 use nvd_cve::client::ReqwestBlockingClient;
@@ -48,8 +46,7 @@ fn main() -> AppResult<()> {
         args.query.clone().unwrap_or_default(),
     );
 
-    let backend = CrosstermBackend::new(io::stderr());
-    let terminal = Terminal::new(backend)?;
+    let terminal = ratatui::try_init()?;
     let events = EventHandler::new(250);
     let mut tui = Tui::new(terminal, events);
     tui.init()?;

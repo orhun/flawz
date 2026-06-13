@@ -1,21 +1,56 @@
 # configuration for https://github.com/EmbarkStudios/cargo-deny
 
+[graph]
+all-features = false
+no-default-features = false
+targets = []
+
+[output]
+feature-depth = 1
+
+[advisories]
+ignore = [
+  { id = "RUSTSEC-2021-0139", reason = "ansi_term is pulled in transitively by nvd_cve 0.3.0 via clap 2; nvd_cve is already at its latest published version" },
+  { id = "RUSTSEC-2024-0375", reason = "atty is pulled in transitively by nvd_cve 0.3.0 via clap 2; nvd_cve is already at its latest published version" },
+]
+
 [licenses]
 confidence-threshold = 0.8
 allow = [
-  "MIT",
   "Apache-2.0",
-  "Unicode-DFS-2016",
-  "ISC",
   "BSD-2-Clause",
   "BSD-3-Clause",
+  "CDLA-Permissive-2.0",
+  "ISC",
+  "MIT",
+  "Unicode-3.0",
   "Zlib",
 ]
+exceptions = []
+
+[licenses.private]
+ignore = false
+registries = []
+
+[bans]
+multiple-versions = "warn"
+wildcards = "allow"
+highlight = "all"
+workspace-default-features = "allow"
+external-default-features = "allow"
+allow = []
+allow-workspace = false
+deny = []
+skip = []
+skip-tree = []
 
 [sources]
 unknown-registry = "deny"
 unknown-git = "warn"
 allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []
 
-[advisories]
-ignore = ["RUSTSEC-2021-0145", "RUSTSEC-2021-0139"]
+[sources.allow-org]
+github = []
+gitlab = []
+bitbucket = []
