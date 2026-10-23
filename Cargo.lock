@@ -723,6 +723,7 @@ dependencies = [
  "itertools",
  "nvd_cve",
  "ratatui",
+ "rusqlite",
  "textwrap 0.16.2",
  "thiserror 2.0.18",
  "tui-input",
