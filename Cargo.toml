@@ -34,6 +34,11 @@ clap_mangen = "0.3.0"
 webbrowser = "1.2.1"
 itertools = "0.14.0"
 
+# Link SQLite statically for musl builds so that the released binaries do not
+# depend on the libsqlite3 available on the target system.
+[target.'cfg(target_env = "musl")'.dependencies]
+rusqlite = { version = "0.31.0", features = ["bundled"] }
+
 [profile.dev]
 opt-level = 0
 debug = true
@@ -69,7 +74,12 @@ ci = "github"
 # The installers to generate for each app
 installers = ["shell", "powershell", "msi"]
 # Target platforms to build apps for (Rust target-triple syntax)
-targets = ["aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-pc-windows-msvc"]
+targets = [
+    "aarch64-apple-darwin",
+    "x86_64-apple-darwin",
+    "x86_64-pc-windows-msvc",
+    "x86_64-unknown-linux-musl",
+]
 # Which actions to run on pull requests
 pr-run-mode = "upload"
 # Whether to install an updater program
